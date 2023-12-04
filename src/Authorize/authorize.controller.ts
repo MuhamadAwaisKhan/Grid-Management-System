@@ -1,6 +1,6 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards, Put } from '@nestjs/common';
 import { AuthorizeService } from './authorize.service';
-import { CreateUserDto, AuthUserDto } from './dto/authorize.dto';
+import { CreateUserDto, AuthUserDto, AuthUpdatePasswordDto } from './dto/authorize.dto';
 
 @Controller('authorize')
 export class AuthorizeController {
@@ -26,15 +26,13 @@ export class AuthorizeController {
     return { token: result.token };
   }
 
-  @Post('forget-password/:username')
-  async forgetPassword(@Param('username') username: string) {
-    try {
-      await this.authorizeService.forgetPassword(username);
-      return { message: 'Forget password process initiated. Check your email for further instructions.' };
-    } catch (error) {
-      // Handle any errors and return an appropriate response
-      console.error(error);
-      throw error;
-    }
-}
+  
+  @Put('forget-password/:username')
+  async forgetPassword(
+    @Param('username') username: string,
+    @Body() updatePasswordDto: AuthUpdatePasswordDto,
+  ): Promise<{ token: string }> {
+    const result = await this.authorizeService.forgetPassword(username, updatePasswordDto);
+    return result;
+  }
 }

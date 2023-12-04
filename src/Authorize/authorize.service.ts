@@ -5,7 +5,7 @@ import {  authorize } from './authorize.entity';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { AuthUserDto, CreateUserDto } from './dto/authorize.dto';
+import { AuthUpdatePasswordDto, AuthUserDto, CreateUserDto } from './dto/authorize.dto';
 
 @Injectable()
 export class AuthorizeService {
@@ -48,32 +48,89 @@ export class AuthorizeService {
     }
   
     // Generate JWT token
-    const token = jwt.sign({ userId: user.id, username: user.username }, 'your-secret-key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, username: user.username }, 'agsfhirq8t5378q7r9qtr9+2', { expiresIn: '1h' });
   
     return { token };
+  
   }
-  async forgetPassword(username: string): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { username } } as FindOneOptions<authorize>);
+  async forgetPassword(username: string, updatePasswordDto: AuthUpdatePasswordDto): Promise<{ token: string }> {
+    const { currentPassword, newPassword } = updatePasswordDto;
+
+    const user = await this.userRepository.findOne({ where: { username } });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    // Generate a unique reset token (you may use a library like `uuid` for this)
-    const resetToken = this.generateUniqueResetToken();
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
 
-    // Store the reset token and expiration time (in a real-world scenario, store it securely)
-    user.resetToken = resetToken;
-    user.resetTokenExpiration = new Date(Date.now() + 3600000); // Reset token valid for 1 hour
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid current password');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedNewPassword;
     await this.userRepository.save(user);
-  }
 
-  generateUniqueResetToken(): string {
-    // Implement your logic to generate a unique reset token, for example, using a library like `uuid`
-    // Ensure it's stored securely and cannot be easily guessed
-    return uuidv4(); // Replace with your actual logic to generate the reset token
+    const token = jwt.sign({ userId: user.id, username: user.username }, 'your-secret-key', { expiresIn: '1h' });
+
+    return { token };
   }
 }
+//   async forgetPassword(username: string, currentPassword: string, newPassword: string): Promise<{ token: string }> {
+//     // Find the user by username
+//     const user = await this.userRepository.findOne({ where: { username } });
+
+//     // If the user is not found, throw an exception
+//     if (!user) {
+//       throw new NotFoundException('User not found');
+//     }
+
+//     // Check if the provided current password is correct
+//     const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+
+//     // If the current password is not valid, throw an exception
+//     if (!isPasswordValid) {
+//       throw new UnauthorizedException('Invalid current password');
+//     }
+
+//     // Hash the new password before updating it
+//     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+//     // Update the user's password
+//     user.password = hashedNewPassword;
+//     await this.userRepository.save(user);
+
+//     // Generate JWT token for the updated user
+//     const token = jwt.sign({ userId: user.id, username: user.username }, 'your-secret-key', { expiresIn: '1h' });
+
+//     // Return the token
+//     return { token };
+//   }
+// }
+//   async forgetPassword(username: string): Promise<void> {
+//     const user = await this.userRepository.findOne({ where: { username } } as FindOneOptions<authorize>);
+
+//     if (!user) {
+//       throw new NotFoundException('User not found');
+//     }
+
+//     // Generate a unique reset token (you may use a library like `uuid` for this)
+//     const resetToken = this.generateUniqueResetToken();
+
+//     // Store the reset token and expiration time (in a real-world scenario, store it securely)
+//     user.resetToken = resetToken;
+//     user.resetTokenExpiration = new Date(Date.now() + 3600000); // Reset token valid for 1 hour
+//     await this.userRepository.save(user);
+//   }
+
+//   generateUniqueResetToken(): string {
+//     // Implement your logic to generate a unique reset token, for example, using a library like `uuid`
+//     // Ensure it's stored securely and cannot be easily guessed
+//     return uuidv4(); // Replace with your actual logic to generate the reset token
+//   }
+// }
 
   //   // Generate a unique reset token (you may use a library like `uuid` for this)
   //   const resetToken = this.generateUniqueResetToken();

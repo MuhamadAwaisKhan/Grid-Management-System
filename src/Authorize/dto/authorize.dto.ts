@@ -32,5 +32,12 @@ export class CreateUserDto {
   @MinLength(8)
   @MaxLength(30)
      password: string;
+     
   }
+  export class AuthUpdatePasswordDto {
+   @ApiProperty()
+   currentPassword: string;
+   @ApiProperty()
+   newPassword: string;
+ }
   
