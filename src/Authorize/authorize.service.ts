@@ -4,6 +4,7 @@ import { FindOneOptions, Repository } from 'typeorm';
 import {  authorize } from './authorize.entity';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import { AuthUserDto, CreateUserDto } from './dto/authorize.dto';
 
 @Injectable()
@@ -58,6 +59,22 @@ export class AuthorizeService {
       throw new NotFoundException('User not found');
     }
 
+    // Generate a unique reset token (you may use a library like `uuid` for this)
+    const resetToken = this.generateUniqueResetToken();
+
+    // Store the reset token and expiration time (in a real-world scenario, store it securely)
+    user.resetToken = resetToken;
+    user.resetTokenExpiration = new Date(Date.now() + 3600000); // Reset token valid for 1 hour
+    await this.userRepository.save(user);
+  }
+
+  generateUniqueResetToken(): string {
+    // Implement your logic to generate a unique reset token, for example, using a library like `uuid`
+    // Ensure it's stored securely and cannot be easily guessed
+    return uuidv4(); // Replace with your actual logic to generate the reset token
+  }
+}
+
   //   // Generate a unique reset token (you may use a library like `uuid` for this)
   //   const resetToken = this.generateUniqueResetToken();
 
@@ -84,5 +101,5 @@ export class AuthorizeService {
   //   // Implement your logic to generate a unique reset token, for example, using a library like `uuid`
   //   // Ensure it's stored securely and cannot be easily guessed
   //   return this.generateUniqueResetToken();
-   }
-  }
+   
+  

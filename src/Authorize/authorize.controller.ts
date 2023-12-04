@@ -4,7 +4,9 @@ import { CreateUserDto, AuthUserDto } from './dto/authorize.dto';
 
 @Controller('authorize')
 export class AuthorizeController {
-  constructor(private readonly authorizeService: AuthorizeService) {}
+  constructor(private readonly authorizeService: AuthorizeService
+    
+    ) {}
 
   @Post('register')
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -12,7 +14,7 @@ export class AuthorizeController {
     return { message: result.message, user: result.authorize };
   }
 
-  @Get('users')
+  @Get('profile')
   async getAllUsers() {
     const users = await this.authorizeService.getAllUsers();
     return { users };
@@ -26,7 +28,13 @@ export class AuthorizeController {
 
   @Post('forget-password/:username')
   async forgetPassword(@Param('username') username: string) {
-    await this.authorizeService.forgetPassword(username);
-    return { message: 'Forget password process initiated. Check your email for further instructions.' };
-  }
+    try {
+      await this.authorizeService.forgetPassword(username);
+      return { message: 'Forget password process initiated. Check your email for further instructions.' };
+    } catch (error) {
+      // Handle any errors and return an appropriate response
+      console.error(error);
+      throw error;
+    }
+}
 }
