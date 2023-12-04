@@ -1,0 +1,42 @@
+// src/power-outage/power-outage.service.ts
+
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PowerOutageEntity } from './power-outage.entity';
+import { CreatePowerOutageDto } from './dto/power-outage.dto';
+
+@Injectable()
+export class PowerOutageService {
+  constructor(
+    @InjectRepository(PowerOutageEntity)
+    private readonly powerOutageRepository: Repository<PowerOutageEntity>,
+  ) {}
+
+  async create(createPowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
+    const powerOutage = this.powerOutageRepository.create(createPowerOutageDto);
+    return await this.powerOutageRepository.save(powerOutage);
+  }
+
+  async findAll(): Promise<PowerOutageEntity[]> {
+    return await this.powerOutageRepository.find();
+  }
+
+  async findOne(id: number): Promise<PowerOutageEntity> {
+    return await this.powerOutageRepository.findOne({where:{outageId:id}});
+  }
+
+  async update(id: number, updatePowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
+    const powerOutage = await this.powerOutageRepository.findOne({where:{outageId:id}});
+    if (!powerOutage) {
+      throw new Error('Power Outage not found');
+    }
+
+    this.powerOutageRepository.merge(powerOutage, updatePowerOutageDto);
+    return await this.powerOutageRepository.save(powerOutage);
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.powerOutageRepository.delete(id);
+  }
+}
