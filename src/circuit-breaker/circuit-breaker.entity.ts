@@ -23,20 +23,20 @@ export class CircuitBreakerEntity {
   @Column()
   status: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.circuitBreakers)
-  @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  // @ManyToOne(() => SubstationEntity, substation => substation.circuitBreakers)
+  // @JoinColumn({ name: 'substationId' })
+  // substation: SubstationEntity;
   @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.circuitBreakers, { nullable: true })
   @JoinColumn({ name: 'mainId' })
   maintenanceLog: MaintenanceLogEntity;
   
   // One circuit breaker can be associated with many schedule maintenance records
-  @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.circuitBreaker)
-  @JoinColumn({ name: 'maintenanceId' })
-  scheduleMaintenances: ScheduleMaintenanceEntity;
+  // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.circuitBreaker)
+  // @JoinColumn({ name: 'maintenanceId' })
+  // scheduleMaintenances: ScheduleMaintenanceEntity;
 
   // One circuit breaker can be associated with many event logs
-  @OneToMany(() => EventLogEntity, eventLog => eventLog.circuitBreaker)
-  @JoinColumn({ name: 'eventId' })
-  eventLogs: EventLogEntity;
-}
+//   @OneToMany(() => EventLogEntity, eventLog => eventLog.circuitBreaker)
+//   @JoinColumn({ name: 'eventId' })
+//   eventLogs: EventLogEntity;
+ }

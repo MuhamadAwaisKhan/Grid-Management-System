@@ -19,15 +19,15 @@ export class PowerOutageEntity {
   @Column()
   cause: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.powerOutages)
-  @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  // @ManyToOne(() => SubstationEntity, substation => substation.powerOutages)
+  // @JoinColumn({ name: 'substationId' })
+  // substation: SubstationEntity;
 
   @ManyToOne(() => FeederEntity, feeder => feeder.powerOutages)
   @JoinColumn({ name: 'feederId' })
   feeder: FeederEntity;
 
-  @ManyToOne(() => TransformerEntity, transformer => transformer.powerOutages)
-  @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
+  // @ManyToOne(() => TransformerEntity, transformer => transformer.powerOutages)
+  // @JoinColumn({ name: 'transformerId' })
+  // transformer: TransformerEntity;
 }

@@ -8,6 +8,8 @@ import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { PowerOutageEntity } from 'src/Power-Outage/power-outage.entity';
+import { FeederEntity } from 'src/feeder/feeder.entity';
+import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
 
 @Entity('Transformer')
 export class TransformerEntity {
@@ -26,24 +28,27 @@ export class TransformerEntity {
   @Column()
   voltageLevel: number;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.transformer)
- @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
-  @ManyToOne(() => GridStationEntity, gridstation => gridstation.transformer)
-    @JoinColumn({ name: 'gridId' })
-    gridstation: GridStationEntity;
-    @OneToMany(() => AlarmLogEntity, alarmLog => alarmLog.transformer)
-    alarmLogs: AlarmLogEntity[];
+  @ManyToOne(() => FeederEntity, feeder => feeder.transformer)
+ @JoinColumn({ name: 'feederId' })
+  feeder: FeederEntity;
+
+    @OneToMany(() => PowerMeterEntity, meter => meter.transformer)
+    @JoinColumn({ name: 'meterId' })
+    meter: PowerMeterEntity;
   
-    @OneToMany(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.transformer)
-    maintenanceLogs: MaintenanceLogEntity[];
+    // @OneToMany(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.transformer)
+    // @JoinColumn({ name: 'mainId' })
+    // maintenanceLogs: MaintenanceLogEntity;
   
-    @OneToMany(() => EventLogEntity, eventLogs => eventLogs.transformer)
-    eventLogs: EventLogEntity[];
+    // @OneToMany(() => EventLogEntity, eventLogs => eventLogs.transformer)
+   // @JoinColumn({ name: 'eventId' })
+    // eventLogs: EventLogEntity;
   
-    @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.transformer)
-    scheduledMaintenances: ScheduleMaintenanceEntity[];
+    // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.transformer)
+    // @JoinColumn({ name: 'maintenanceId' })
+    // scheduledMaintenances: ScheduleMaintenanceEntity;
   
-    @OneToMany(() => PowerOutageEntity, powerOutage => powerOutage.transformer)
-    powerOutages: PowerOutageEntity[];
+    // @OneToMany(() => PowerOutageEntity, powerOutage => powerOutage.transformer)
+    // @JoinColumn({ name: 'outageId' })
+    // powerOutages: PowerOutageEntity;
 }

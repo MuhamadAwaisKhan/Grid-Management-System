@@ -1,12 +1,22 @@
-import { Controller, Post, Body, Get, Param, UseGuards, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { AuthorizeService } from './authorize.service';
-import { CreateUserDto, AuthUserDto, AuthUpdatePasswordDto } from './dto/authorize.dto';
+import {
+  CreateUserDto,
+  AuthUserDto,
+  AuthUpdatePasswordDto,
+} from './dto/authorize.dto';
 
 @Controller('authorize')
 export class AuthorizeController {
-  constructor(private readonly authorizeService: AuthorizeService
-    
-    ) {}
+  constructor(private readonly authorizeService: AuthorizeService) {}
 
   @Post('register')
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -26,13 +36,15 @@ export class AuthorizeController {
     return { token: result.token };
   }
 
-  
   @Put('forget-password/:username')
   async forgetPassword(
     @Param('username') username: string,
     @Body() updatePasswordDto: AuthUpdatePasswordDto,
-  ): Promise<{ token: string }> {
-    const result = await this.authorizeService.forgetPassword(username, updatePasswordDto);
+  ): Promise<object> {
+    const result = await this.authorizeService.forgetPassword(
+      username, 
+      updatePasswordDto,
+    );
     return result;
   }
 }

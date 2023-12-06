@@ -7,6 +7,8 @@ import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-mai
 import { PowerOutageEntity } from 'src/Power-Outage/power-outage.entity';
 import { AlarmLogEntity } from 'src/AlarmLog/alarm-log.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
+import { TransformerEntity } from 'src/transformer/transformer.entity';
+import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
 
 @Entity('Feeder')
 export class FeederEntity {
@@ -25,28 +27,35 @@ export class FeederEntity {
   @Column()
   capacity: number;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.feeders)
+  @OneToMany(() => TransformerEntity, transformer => transformer.feeder)
+  @JoinColumn({ name: 'transformerId' })
+  transformer: TransformerEntity;
+  @ManyToOne(() => SubstationEntity, substation => substation.feeder)
   @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+substation: SubstationEntity;
   // One feeder can be associated with many event logs
-  @OneToMany(() => EventLogEntity, eventLog => eventLog.feeder)
-  @JoinColumn({ name: 'eventId' })
-  eventLogs: EventLogEntity;
+  // @OneToMany(() => EventLogEntity, eventLog => eventLog.feeder)
+  // @JoinColumn({ name: 'eventId' })
+  // eventLogs: EventLogEntity;
 
   // One feeder can be associated with many schedule maintenance records
-  @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.feeder)
-  @JoinColumn({ name: 'maintenanceId' })
-  scheduleMaintenances: ScheduleMaintenanceEntity;
+  // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.feeder)
+  // @JoinColumn({ name: 'maintenanceId' })
+  // scheduleMaintenances: ScheduleMaintenanceEntity;
 
   // One feeder can be associated with many power outages
   @OneToMany(() => PowerOutageEntity, powerOutage => powerOutage.feeder)
-  powerOutages: PowerOutageEntity[];
+  @JoinColumn({ name: 'outageId' })
+  powerOutages: PowerOutageEntity;
 
   // One feeder can be associated with many alarm logs
   @OneToMany(() => AlarmLogEntity, alarmLog => alarmLog.feeder)
-  alarmLogs: AlarmLogEntity[];
+  @JoinColumn({ name: 'alarmId' })
+  alarmLogs: AlarmLogEntity;
 
   // One feeder can be associated with many maintenance logs
   @OneToMany(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.feeder)
-  maintenanceLogs: MaintenanceLogEntity[];
+  @JoinColumn({ name: 'mainId' })
+  maintenanceLogs: MaintenanceLogEntity;
+  
 }

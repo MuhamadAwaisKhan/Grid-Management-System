@@ -21,15 +21,15 @@ export class EventLogEntity {
   @JoinColumn({ name: 'substationId' })
   substation: SubstationEntity;
 
-  @ManyToOne(() => TransformerEntity, transformer => transformer.eventLogs)
-  @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
-  @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.eventLogs)
-  @JoinColumn({ name: 'breakerId' })
-  circuitBreaker: CircuitBreakerEntity;
+  // @ManyToOne(() => TransformerEntity, transformer => transformer.eventLogs)
+  // @JoinColumn({ name: 'transformerId' })
+  // transformer: TransformerEntity;
+  // @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.eventLogs)
+  // @JoinColumn({ name: 'breakerId' })
+  // circuitBreaker: CircuitBreakerEntity;
 
 
-  @ManyToOne(() => FeederEntity, feeder => feeder.eventLogs)
-  @JoinColumn({ name: 'feederId' })
-  feeder: FeederEntity;
+  // @ManyToOne(() => FeederEntity, feeder => feeder.eventLogs)
+  // @JoinColumn({ name: 'feederId' })
+  // feeder: FeederEntity;
 }

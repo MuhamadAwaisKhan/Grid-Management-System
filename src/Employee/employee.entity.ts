@@ -28,7 +28,7 @@ export class EmployeeEntity {
   maintenanceLogs: MaintenanceLogEntity;
 
   // One employee can be associated with many schedule maintenance records
-  @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.employee)
-  @JoinColumn({ name: 'maintenanceId' })
-  scheduleMaintenances: ScheduleMaintenanceEntity;
-}
+//   @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.employee)
+//   @JoinColumn({ name: 'maintenanceId' })
+//   scheduleMaintenances: ScheduleMaintenanceEntity;
+ }

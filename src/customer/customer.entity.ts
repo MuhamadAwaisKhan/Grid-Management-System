@@ -1,7 +1,9 @@
 // src/customer/customer.entity.ts
 
 import { BillingEntity } from 'src/billing/billing.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm';
+import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
+import { SubstationEntity } from 'src/substation/substation.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('Customer')
 export class CustomerEntity {
@@ -25,4 +27,10 @@ export class CustomerEntity {
   @OneToMany(() => BillingEntity, billing => billing.customer)
   @JoinColumn({ name: 'billingId' })
   billing: BillingEntity;
+  // @ManyToOne(() => SubstationEntity, substation => substation.customer)
+  // @JoinColumn({ name: 'substationId' })
+  // substation: SubstationEntity;
+  @OneToMany(() => PowerMeterEntity, powermeter => powermeter.customer)
+  @JoinColumn({ name: 'meterId' })
+  powermeter: PowerMeterEntity;
 }

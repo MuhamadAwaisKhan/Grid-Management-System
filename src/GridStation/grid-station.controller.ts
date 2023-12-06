@@ -1,16 +1,36 @@
 // src/grid-station/grid-station.controller.ts
 
-import { Controller, Get, Post, Body, Put, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { GridStationService } from './grid-station.service';
-import { CreateGridStationDto, UpdateGridStationDto } from './dto/grid-station.dto';
+import {
+  CreateGridStationDto,
+  UpdateGridStationDto,
+} from './dto/grid-station.dto';
+import { PowerSupplierService } from 'src/PowerSupplier/power-supplier.service';
 @UsePipes(ValidationPipe)
 @Controller('grid-station')
 export class GridStationController {
   constructor(private readonly gridStationService: GridStationService) {}
 
-  @Post()
-  create(@Body() createGridStationDto: CreateGridStationDto) {
-    return this.gridStationService.create(createGridStationDto);
+  @Post(':powerSupplierId')
+  create(
+    @Body() createGridStationDto: CreateGridStationDto,
+    @Param('powerSupplierId') powerSupplierId: number,
+  ) {
+    return this.gridStationService.create(
+      createGridStationDto,
+      powerSupplierId,
+    );
   }
 
   @Get()
@@ -24,7 +44,10 @@ export class GridStationController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateGridStationDto: UpdateGridStationDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateGridStationDto: UpdateGridStationDto,
+  ) {
     return this.gridStationService.update(+id, updateGridStationDto);
   }
 

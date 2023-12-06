@@ -24,10 +24,8 @@ export class GridStationEntity {
   @OneToMany(() => SubstationEntity, substation => substation.gridStation)
   @JoinColumn({ name: 'substationId' })
   substations: SubstationEntity;
-  @OneToMany(() => TransformerEntity, substation => substation.gridstation)
-  @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
-  @ManyToOne(() => PowerSupplierEntity, supplier => supplier.gridstation)
+ 
+  @ManyToOne(() => PowerSupplierEntity, supplier => supplier.gridstation,{ nullable: true })
   @JoinColumn({ name: 'supplierId' })
   supplier: PowerSupplierEntity;
 }

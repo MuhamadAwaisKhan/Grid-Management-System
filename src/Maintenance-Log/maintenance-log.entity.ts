@@ -20,22 +20,22 @@ export class MaintenanceLogEntity {
   @JoinColumn({ name: 'employeeId' })
  employee: EmployeeEntity;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.maintenanceLogs)
-  @JoinColumn({ name: 'substationId' })
- substation: SubstationEntity;
+//   @ManyToOne(() => SubstationEntity, substation => substation.maintenanceLogs)
+//   @JoinColumn({ name: 'substationId' })
+//  substation: SubstationEntity;
 
-  @ManyToOne(() => TransformerEntity, transformer => transformer.maintenanceLogs)
-  @JoinColumn({ name: 'transformerId' })
- transformer: TransformerEntity;
+//   @ManyToOne(() => TransformerEntity, transformer => transformer.maintenanceLogs)
+//   @JoinColumn({ name: 'transformerId' })
+//  transformer: TransformerEntity;
   // One maintenance log can be associated with many circuit breakers
   @OneToMany(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.maintenanceLog)
   @JoinColumn({ name: 'breakerId' })
   circuitBreakers: CircuitBreakerEntity;
 
   // One maintenance log can be associated with many schedule maintenance records
-  @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.maintenanceLog)
-  @JoinColumn({ name: 'maintenanceId' })
-  scheduleMaintenances: ScheduleMaintenanceEntity;
+  // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.maintenanceLog)
+  // @JoinColumn({ name: 'maintenanceId' })
+  // scheduleMaintenances: ScheduleMaintenanceEntity;
 
 
 

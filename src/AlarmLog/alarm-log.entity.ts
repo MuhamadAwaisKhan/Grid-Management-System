@@ -22,16 +22,16 @@ export class AlarmLogEntity {
   @Column()
   severityLevel: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.alarmLogs)
-  @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  // @ManyToOne(() => SubstationEntity, substation => substation.alarmLogs)
+  // @JoinColumn({ name: 'substationId' })
+  // substation: SubstationEntity;
 
   @ManyToOne(() => FeederEntity, feeder => feeder.alarmLogs)
   @JoinColumn({ name: 'feederId' })
   feeder: FeederEntity;
 
-  @ManyToOne(() => TransformerEntity, transformer => transformer.alarmLogs)
-  @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
+  // @ManyToOne(() => TransformerEntity, transformer => transformer.alarmLogs)
+  // @JoinColumn({ name: 'transformerId' })
+  // transformer: TransformerEntity;
 }
 

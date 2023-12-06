@@ -1,25 +1,45 @@
-// src/grid-station/grid-station.service.ts
+// src/GridStation/grid-station.service.ts
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GridStationEntity } from './grid-station.entity';
 import { CreateGridStationDto } from './dto/grid-station.dto';
+import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
 
 @Injectable()
 export class GridStationService {
   constructor(
     @InjectRepository(GridStationEntity)
     private readonly gridStationRepository: Repository<GridStationEntity>,
+    @InjectRepository(PowerSupplierEntity)
+    private readonly powerSupplierRepository: Repository<PowerSupplierEntity>,
   ) {}
 
-  async create(createGridStationDto: CreateGridStationDto): Promise<GridStationEntity> {
-    const gridStation = this.gridStationRepository.create(createGridStationDto);
-    return await this.gridStationRepository.save(gridStation);
+  async create(
+    createGridStationDto: CreateGridStationDto,
+    powerSupplierId: number, // Accept gridStationId as an argument
+  ): Promise<PowerSupplierEntity> {
+    const createdGridStation = this.gridStationRepository.create(
+      createGridStationDto,
+    );
+
+    if (powerSupplierId) {
+      const powerSupplier = await this.powerSupplierRepository.findOneBy({supplierId: powerSupplierId});
+      if (!powerSupplier) {
+        throw new Error('GridStation not found');
+      }
+
+      createdGridStation.supplier = powerSupplier;
+    }
+
+    return await this.powerSupplierRepository.save(createdGridStation);
   }
 
   async findAll(): Promise<GridStationEntity[]> {
-    return await this.gridStationRepository.find();
+    return await this.gridStationRepository.find({
+      relations: ['supplier'],
+    });
   }
 
   async findOne(id: number) {
@@ -27,7 +47,7 @@ export class GridStationService {
   }
 
   async update(id: number, updateGridStationDto: CreateGridStationDto): Promise<GridStationEntity> {
-    const gridStation = await this.gridStationRepository.findOne({ where: { gridId:id  } });
+    const gridStation = await this.gridStationRepository.findOne({where: {gridId: id}});
     if (!gridStation) {
       throw new Error('GridStation not found');
     }

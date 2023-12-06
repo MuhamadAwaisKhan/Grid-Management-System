@@ -24,6 +24,6 @@ export class FaultEntity {
   type: string;
 
   @ManyToOne(() => SubstationEntity, substation => substation.faults)
-  @JoinColumn({ name: 'maId' })
+  @JoinColumn({ name: 'substationId' })
   substation: SubstationEntity;
 }

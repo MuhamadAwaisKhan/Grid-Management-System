@@ -19,29 +19,29 @@ export class ScheduleMaintenanceEntity {
   @Column()
   date: Date;
 
-  @ManyToOne(() => EmployeeEntity, employee => employee.scheduleMaintenances)
-  @JoinColumn({ name: 'employeeId' })
-  employee: EmployeeEntity;
+  // @ManyToOne(() => EmployeeEntity, employee => employee.scheduleMaintenances)
+  // @JoinColumn({ name: 'employeeId' })
+  // employee: EmployeeEntity;
 
   @ManyToOne(() => SubstationEntity, substation => substation.scheduledMaintenances)
   @JoinColumn({ name: 'substationId' })
   substation: SubstationEntity;
 
-  @ManyToOne(() => TransformerEntity, transformer => transformer.scheduledMaintenances)
-  @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
-  @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.scheduleMaintenances)
-  maintenanceLog: MaintenanceLogEntity;
+  // @ManyToOne(() => TransformerEntity, transformer => transformer.scheduledMaintenances)
+  // @JoinColumn({ name: 'transformerId' })
+  // transformer: TransformerEntity;
+  // @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.scheduleMaintenances)
+  // maintenanceLog: MaintenanceLogEntity;
 
-  // Many schedule maintenance records can be associated with one circuit breaker
-  @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.scheduleMaintenances)
-  @JoinColumn({ name: 'breakerId' })
-  circuitBreaker: CircuitBreakerEntity;
-
-
+  // // Many schedule maintenance records can be associated with one circuit breaker
+  // @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.scheduleMaintenances)
+  // @JoinColumn({ name: 'breakerId' })
+  // circuitBreaker: CircuitBreakerEntity;
 
 
-  @ManyToOne(() => FeederEntity, feeder => feeder.scheduleMaintenances)
-  @JoinColumn({ name: 'feederId' })
-  feeder: FeederEntity;
+
+
+  // @ManyToOne(() => FeederEntity, feeder => feeder.scheduleMaintenances)
+  // @JoinColumn({ name: 'feederId' })
+  // feeder: FeederEntity;
 }

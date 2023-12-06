@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GridStationEntity } from './grid-station.entity';
 import { GridStationController } from './grid-station.controller';
 import { GridStationService } from './grid-station.service';
+import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([GridStationEntity])],
+  imports: [TypeOrmModule.forFeature([GridStationEntity,PowerSupplierEntity])],
   controllers: [GridStationController],
 
   exports: [GridStationService],

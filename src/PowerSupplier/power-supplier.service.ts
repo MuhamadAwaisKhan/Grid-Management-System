@@ -19,12 +19,13 @@ export class PowerSupplierService {
   }
 
   async findAll(): Promise<PowerSupplierEntity[]> {
-    return await this.powerSupplierRepository.find();
+    return await this.powerSupplierRepository.find( { relations: ['gridstation']
+  });
   }
 
   async findOne(id: number): Promise<PowerSupplierEntity> {
     return await this.powerSupplierRepository.findOne({where:{supplierId:id}});
-  }
+  }s
 
   async update(id: number, updatePowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity> {
     const powerSupplier = await this.powerSupplierRepository.findOne({where:{supplierId:id}});
