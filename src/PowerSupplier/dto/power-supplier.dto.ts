@@ -5,11 +5,11 @@ import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
 
 export class CreatePowerSupplierDto {
   @ApiProperty()
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   name: string;
   @ApiProperty()
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   contactDetail: string;
 
