@@ -5,7 +5,11 @@ import { SubstationEntity } from '../substation/substation.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
-
+export enum CircuitBreakerStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  DEFAULT = 'default',
+}
 @Entity('CircuitBreaker')
 export class CircuitBreakerEntity {
   @PrimaryGeneratedColumn()
@@ -20,8 +24,13 @@ export class CircuitBreakerEntity {
   @Column()
   capacity: number;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: CircuitBreakerStatus,
+    default: CircuitBreakerStatus.DEFAULT,
+  })
+  status: CircuitBreakerStatus;
+
 
   // @ManyToOne(() => SubstationEntity, substation => substation.circuitBreakers)
   // @JoinColumn({ name: 'substationId' })

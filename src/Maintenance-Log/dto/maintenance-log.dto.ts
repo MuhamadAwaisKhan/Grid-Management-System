@@ -2,17 +2,22 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { CreateScheduleMaintenanceDto } from 'src/Schedule-Maintenance/dto/schedule-maintenance.dto';
 
 export class CreateMaintenanceLogDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
   description: string;
-  @ApiProperty()
+ 
   @IsNotEmpty()
   @IsNumber()
   employeeId: number;
-
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  timestamp: Date;
   // @IsNotEmpty()
   // @IsNumber()
   // substationId: number;
@@ -25,4 +30,5 @@ export class CreateMaintenanceLogDto {
   @ApiProperty()
   @IsNumber()
   feederId: number;
+  schedule:CreateScheduleMaintenanceDto
 }

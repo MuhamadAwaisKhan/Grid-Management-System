@@ -19,13 +19,14 @@ export class GridStationService {
   async create(
     createGridStationDto: CreateGridStationDto,
     powerSupplierId: number, // Accept gridStationId as an argument
-  ): Promise<PowerSupplierEntity> {
-    const createdGridStation = this.gridStationRepository.create(
-      createGridStationDto,
-    );
+  ): Promise<object> {
+    const createdGridStation =
+      this.gridStationRepository.create(createGridStationDto);
 
     if (powerSupplierId) {
-      const powerSupplier = await this.powerSupplierRepository.findOneBy({supplierId: powerSupplierId});
+      const powerSupplier = await this.powerSupplierRepository.findOneBy({
+        supplierId: powerSupplierId,
+      });
       if (!powerSupplier) {
         throw new Error('GridStation not found');
       }
@@ -33,7 +34,25 @@ export class GridStationService {
       createdGridStation.supplier = powerSupplier;
     }
 
-    return await this.powerSupplierRepository.save(createdGridStation);
+    console.log('createdGridStation -> ', createdGridStation);
+
+    // return {message: "In Development"}
+
+    return await this.gridStationRepository
+      .save(createdGridStation)
+      .then((res) => {
+        return {
+          message: 'Grid Station Created Successfully',
+          data: res,
+        };
+      })
+      .catch((err) => {
+        return {
+          message: 'Grid Station Created Successfully',
+          data: null,
+          error: err,
+        };
+      });
   }
 
   async findAll(): Promise<GridStationEntity[]> {
@@ -46,8 +65,13 @@ export class GridStationService {
     return this.gridStationRepository.findOne({ where: { gridId: id } });
   }
 
-  async update(id: number, updateGridStationDto: CreateGridStationDto): Promise<GridStationEntity> {
-    const gridStation = await this.gridStationRepository.findOne({where: {gridId: id}});
+  async update(
+    id: number,
+    updateGridStationDto: CreateGridStationDto,
+  ): Promise<GridStationEntity> {
+    const gridStation = await this.gridStationRepository.findOne({
+      where: { gridId: id },
+    });
     if (!gridStation) {
       throw new Error('GridStation not found');
     }

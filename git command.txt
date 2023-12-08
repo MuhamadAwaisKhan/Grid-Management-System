@@ -1,0 +1,26 @@
+git init
+
+git status
+
+git add .
+
+git status
+
+
+git commit -m "first commit after creating repo"
+
+git status
+
+git log
+
+git branch -M main
+
+git log 
+
+git remote add origin https://github.com/hassan1811/Resume-Builder.git
+
+git push -u origin main
+
+
+ 
+

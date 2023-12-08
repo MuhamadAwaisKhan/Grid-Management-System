@@ -16,8 +16,7 @@ export class CustomerEntity {
   @Column()
   contact: string;
 
-  @Column()
-  accountNumber: number;
+  
 
   @Column()
   address: string;

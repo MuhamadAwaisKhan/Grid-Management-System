@@ -1,6 +1,14 @@
 // src/maintenance-log/maintenance-log.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { EmployeeEntity } from '../employee/employee.entity';
 import { SubstationEntity } from '../substation/substation.entity';
 import { TransformerEntity } from '../transformer/transformer.entity';
@@ -15,31 +23,38 @@ export class MaintenanceLogEntity {
 
   @Column()
   description: string;
+  @Column()
+  timestamp: Date;
 
-  @ManyToOne(() => EmployeeEntity, employee => employee.maintenanceLogs)
+  @ManyToOne(() => EmployeeEntity, (employee) => employee.maintenanceLogs)
   @JoinColumn({ name: 'employeeId' })
- employee: EmployeeEntity;
+  employee: EmployeeEntity;
 
-//   @ManyToOne(() => SubstationEntity, substation => substation.maintenanceLogs)
-//   @JoinColumn({ name: 'substationId' })
-//  substation: SubstationEntity;
+  //   @ManyToOne(() => SubstationEntity, substation => substation.maintenanceLogs)
+  //   @JoinColumn({ name: 'substationId' })
+  //  substation: SubstationEntity;
 
-//   @ManyToOne(() => TransformerEntity, transformer => transformer.maintenanceLogs)
-//   @JoinColumn({ name: 'transformerId' })
-//  transformer: TransformerEntity;
+  //   @ManyToOne(() => TransformerEntity, transformer => transformer.maintenanceLogs)
+  //   @JoinColumn({ name: 'transformerId' })
+  //  transformer: TransformerEntity;
   // One maintenance log can be associated with many circuit breakers
-  @OneToMany(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.maintenanceLog)
+  @OneToMany(
+    () => CircuitBreakerEntity,
+    (circuitBreaker) => circuitBreaker.maintenanceLog,
+  )
   @JoinColumn({ name: 'breakerId' })
   circuitBreakers: CircuitBreakerEntity;
+
+  @OneToOne(() => ScheduleMaintenanceEntity, { cascade: true, nullable: true })
+  @JoinColumn()
+  schedule: ScheduleMaintenanceEntity;
 
   // One maintenance log can be associated with many schedule maintenance records
   // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.maintenanceLog)
   // @JoinColumn({ name: 'maintenanceId' })
   // scheduleMaintenances: ScheduleMaintenanceEntity;
 
-
-
-  @ManyToOne(() => FeederEntity, feeder => feeder.maintenanceLogs)
+  @ManyToOne(() => FeederEntity, (feeder) => feeder.maintenanceLogs)
   @JoinColumn({ name: 'feederId' })
- feeder: FeederEntity;
+  feeder: FeederEntity;
 }

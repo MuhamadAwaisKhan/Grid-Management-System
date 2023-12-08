@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
 
 export class CreateGridStationDto {
   @ApiProperty()
@@ -26,12 +27,10 @@ export class CreateGridStationDto {
   @IsNumber()
   @IsNotEmpty()
   voltageLevel: number;
-  @ApiProperty()
-  @IsOptional()
-  @IsNumber()
-  supplierId: number;
 
-  //powersupplier: CreatePowerSupplierDto;
+  // @IsOptional()
+  // @IsNumber()
+  // supplier: PowerSupplierEntity;
 }
 export class UpdateGridStationDto {
   @ApiProperty()
@@ -50,8 +49,9 @@ export class UpdateGridStationDto {
   @IsNumber()
   @IsNotEmpty()
   voltageLevel: number;
-  @ApiProperty()
-  @IsOptional()
-  @IsNumber()
-  supplierId: number;
+
+  
+  // @IsOptional()
+  // @IsNumber()
+  // supplier: PowerSupplierEntity;
 }

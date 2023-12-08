@@ -10,8 +10,8 @@ import { TransformerEntity } from 'src/transformer/transformer.entity';
 export class PowerMeterEntity {
   @PrimaryGeneratedColumn()
   meterid: number;
-
-
+@Column()
+units:Number;
   @Column()
   serialNumber: string;
 

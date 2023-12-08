@@ -14,6 +14,10 @@ export class CreatePowerMeterDto {
   serialNumber: string;
   @ApiProperty()
   @IsNotEmpty()
+  @IsNumber()
+  units: number;
+  @ApiProperty()
+  @IsNotEmpty()
   @IsDate()
   installationDate: Date;
   @ApiProperty()

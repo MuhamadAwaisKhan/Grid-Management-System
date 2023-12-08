@@ -1,6 +1,6 @@
 // src/schedule-maintenance/schedule-maintenance.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { EmployeeEntity } from '../employee/employee.entity';
 import { SubstationEntity } from '../substation/substation.entity';
 import { TransformerEntity } from '../transformer/transformer.entity';
@@ -32,6 +32,11 @@ export class ScheduleMaintenanceEntity {
   // transformer: TransformerEntity;
   // @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.scheduleMaintenances)
   // maintenanceLog: MaintenanceLogEntity;
+  @OneToOne(() => MaintenanceLogEntity, (maintenanceLog) => maintenanceLog.schedule)
+  maintenanceLog: MaintenanceLogEntity;
+
+  // @OneToOne(()=> MaintenanceLogEntity, (main) => main.schedule)
+  // main: MaintenanceLogEntity
 
   // // Many schedule maintenance records can be associated with one circuit breaker
   // @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.scheduleMaintenances)

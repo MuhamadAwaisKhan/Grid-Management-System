@@ -13,10 +13,7 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   @IsString()
   contact: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  accountNumber: number;
+  
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

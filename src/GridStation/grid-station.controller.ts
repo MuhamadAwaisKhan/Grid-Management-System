@@ -16,7 +16,6 @@ import {
   CreateGridStationDto,
   UpdateGridStationDto,
 } from './dto/grid-station.dto';
-import { PowerSupplierService } from 'src/PowerSupplier/power-supplier.service';
 @UsePipes(ValidationPipe)
 @Controller('grid-station')
 export class GridStationController {
