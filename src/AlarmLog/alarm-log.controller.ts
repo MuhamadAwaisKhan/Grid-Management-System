@@ -9,12 +9,14 @@ import { AlarmLogEntity } from './alarm-log.entity';
 @Controller('alarm-log')
 export class AlarmLogController {
   constructor(private readonly alarmLogService: AlarmLogService) {}
-
-  @Post()
-  async create(@Body() createAlarmLogDto: CreateAlarmLogDto): Promise<AlarmLogEntity> {
-    return this.alarmLogService.create(createAlarmLogDto);
+  @Post(':feedersId')
+  async create(
+    @Body() createAlarmLogDto: CreateAlarmLogDto,
+      @Param('feederId') feederId: number,
+      ) {
+    return this.alarmLogService.create(createAlarmLogDto,feederId);
   }
-
+ 
   @Get()
   async findAll(): Promise<AlarmLogEntity[]> {
     return this.alarmLogService.findAll();
@@ -29,12 +31,12 @@ export class AlarmLogController {
   async update(
     @Param('id') id: string,
     @Body() updateAlarmLogDto: CreateAlarmLogDto,
-  ): Promise<AlarmLogEntity> {
+  ) {
     return this.alarmLogService.update(+id, updateAlarmLogDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.alarmLogService.remove(+id);
   }
 }

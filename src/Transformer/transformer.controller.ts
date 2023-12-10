@@ -9,9 +9,12 @@ import { TransformerEntity } from './transformer.entity';
 export class TransformerController {
   constructor(private readonly transformerService: TransformerService) {}
 
-  @Post()
-  async create(@Body() createTransformerDto: CreateTransformerDto): Promise<TransformerEntity> {
-    return this.transformerService.create(createTransformerDto);
+  @Post(':feederId')
+  async create(
+    @Body() createTransformerDto: CreateTransformerDto,
+      @Param('feederId') feederId: number,
+      ) {
+    return this.transformerService.create(createTransformerDto,feederId);
   }
 
   @Get()
@@ -28,12 +31,12 @@ export class TransformerController {
   async update(
     @Param('id') id: string,
     @Body() updateTransformerDto: CreateTransformerDto,
-  ): Promise<TransformerEntity> {
+  ) {
     return this.transformerService.update(+id, updateTransformerDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.transformerService.remove(+id);
   }
 }

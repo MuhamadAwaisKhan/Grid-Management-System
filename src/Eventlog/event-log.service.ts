@@ -5,29 +5,67 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EventLogEntity } from './event-log.entity';
 import { CreateEventLogDto } from './dto/event-log.dto';
+import { SubstationEntity } from 'src/substation/substation.entity';
 
 @Injectable()
 export class EventLogService {
   constructor(
+    @InjectRepository(SubstationEntity)
+    private readonly substationRepository: Repository<SubstationEntity>,
+
     @InjectRepository(EventLogEntity)
     private readonly eventLogRepository: Repository<EventLogEntity>,
   ) {}
 
-  async create(createEventLogDto: CreateEventLogDto): Promise<EventLogEntity> {
-    const eventLog = this.eventLogRepository.create(createEventLogDto);
-    return await this.eventLogRepository.save(eventLog);
+  async create(
+    createEventLogDto: CreateEventLogDto,
+    substationId: number, // Accept substationId as an argument
+    ): Promise<EventLogEntity
+    |object> {
+    const createdEventLog = this.eventLogRepository.create(createEventLogDto);
+  if (substationId) {
+    const substation = await this.substationRepository.findOneBy(
+      { substationId: substationId },
+    );
+    if (!substation) {
+      throw new Error('Substation not found');
+    }
+    createdEventLog.substation = substation;
+  }
+  console.log('createdEventLog -> ', createdEventLog);
+  // return {message: "In Development"}
+  return await this.eventLogRepository
+    .save(createdEventLog)
+    .then((res) => {
+      return {
+        message: 'EventLog Created Successfully',
+        data: res,
+      };
+    })
+    .catch((err) => {
+      return {
+        message: 'EventLog Created Successfully',
+        data: null,
+        error: err,
+      };
+    });
   }
 
   async findAll(): Promise<EventLogEntity[]> {
-    return await this.eventLogRepository.find();
+    return await this.eventLogRepository.find({ relations: ['substation']});
   }
 
   async findOne(id: number): Promise<EventLogEntity> {
-    return await this.eventLogRepository.findOne({where:{eventId:id}});
+    return await this.eventLogRepository.findOne({ where: { eventId: id } });
   }
 
-  async update(id: number, updateEventLogDto: CreateEventLogDto): Promise<EventLogEntity> {
-    const eventLog = await this.eventLogRepository.findOne({where:{eventId:id}});
+  async update(
+    id: number,
+    updateEventLogDto: CreateEventLogDto,
+  ): Promise<EventLogEntity> {
+    const eventLog = await this.eventLogRepository.findOne({
+      where: { eventId: id },
+    });
     if (!eventLog) {
       throw new Error('EventLog not found');
     }

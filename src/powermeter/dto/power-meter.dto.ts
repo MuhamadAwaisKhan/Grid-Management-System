@@ -20,12 +20,12 @@ export class CreatePowerMeterDto {
   @IsNotEmpty()
   @IsDate()
   installationDate: Date;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  customerId: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  transformerId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // customerId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // transformerId: number;
 }

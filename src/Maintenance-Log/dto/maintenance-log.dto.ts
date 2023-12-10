@@ -10,9 +10,9 @@ export class CreateMaintenanceLogDto {
   @IsString()
   description: string;
  
-  @IsNotEmpty()
-  @IsNumber()
-  employeeId: number;
+  // @IsNotEmpty()
+  // @IsNumber()
+  // employeeId: number;
   
   @ApiProperty()
   @IsNotEmpty()
@@ -21,14 +21,17 @@ export class CreateMaintenanceLogDto {
   // @IsNotEmpty()
   // @IsNumber()
   // substationId: number;
-  @ApiProperty()
-  @IsNumber()
-  transformerId: number;
-  @ApiProperty()
-  @IsNumber()
-  breakerId: number;
-  @ApiProperty()
-  @IsNumber()
-  feederId: number;
+
+  // @ApiProperty()
+  // @IsNumber()
+  // transformerId: number;
+
+  // @ApiProperty()
+  // @IsNumber()
+  // breakerId: number;
+  
+  // @ApiProperty()
+  // @IsNumber()
+  // feederId: number;
   schedule:CreateScheduleMaintenanceDto
 }

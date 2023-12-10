@@ -9,10 +9,14 @@ import { CircuitBreakerEntity } from './circuit-breaker.entity';
 export class CircuitBreakerController {
   constructor(private readonly circuitBreakerService: CircuitBreakerService) {}
 
-  @Post()
-  async create(@Body() createCircuitBreakerDto: CreateCircuitBreakerDto): Promise<CircuitBreakerEntity> {
-    return this.circuitBreakerService.create(createCircuitBreakerDto);
+  @Post(':feedId')
+  async create(
+    @Body() createCircuitBreakerDto: CreateCircuitBreakerDto,
+      @Param('feederId') feederId: number,
+      ) {
+    return this.circuitBreakerService.create(createCircuitBreakerDto,feederId);
   }
+  
 
   @Get()
   async findAll(): Promise<CircuitBreakerEntity[]> {
@@ -28,12 +32,12 @@ export class CircuitBreakerController {
   async update(
     @Param('id') id: string,
     @Body() updateCircuitBreakerDto: CreateCircuitBreakerDto,
-  ): Promise<CircuitBreakerEntity> {
+  ) {
     return this.circuitBreakerService.update(+id, updateCircuitBreakerDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string){
     return this.circuitBreakerService.remove(+id);
   }
 }

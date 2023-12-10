@@ -68,7 +68,7 @@ export class GridStationService {
   async update(
     id: number,
     updateGridStationDto: CreateGridStationDto,
-  ): Promise<GridStationEntity> {
+  ): Promise<GridStationEntity | object> {
     const gridStation = await this.gridStationRepository.findOne({
       where: { gridId: id },
     });
@@ -77,10 +77,17 @@ export class GridStationService {
     }
 
     this.gridStationRepository.merge(gridStation, updateGridStationDto);
-    return await this.gridStationRepository.save(gridStation);
+    const updatedgridstation= await this.gridStationRepository.save(gridStation);
+    return {
+      message: 'Grid Station Updated Successfully',
+      data: updatedgridstation,
+    };
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<object> {
     await this.gridStationRepository.delete(id);
+    return {
+      message: 'Grid Station Deleted Successfully',
+    };
   }
 }

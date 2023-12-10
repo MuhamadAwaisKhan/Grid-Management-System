@@ -16,8 +16,8 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsString()
   contactInfo: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
 }

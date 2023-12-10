@@ -1,17 +1,31 @@
 // src/substation/substation.controller.ts
 
-import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { SubstationService } from './substation.service';
 import { CreateSubstationDto } from './dto/substation.dto';
 import { SubstationEntity } from './substation.entity';
+
 @UsePipes(ValidationPipe)
 @Controller('substation')
 export class SubstationController {
   constructor(private readonly substationService: SubstationService) {}
 
-  @Post()
-  async create(@Body() createSubstationDto: CreateSubstationDto): Promise<SubstationEntity> {
-    return this.substationService.create(createSubstationDto);
+  @Post(':gridStationId')
+  async create(
+    @Body() createSubstationDto: CreateSubstationDto,
+    @Param('gridStationId') gridStationId: number,
+  ) {
+    return this.substationService.create(createSubstationDto, gridStationId);
   }
 
   @Get()
@@ -28,12 +42,12 @@ export class SubstationController {
   async update(
     @Param('id') id: string,
     @Body() updateSubstationDto: CreateSubstationDto,
-  ): Promise<SubstationEntity> {
+  ) {
     return this.substationService.update(+id, updateSubstationDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.substationService.remove(+id);
   }
 }

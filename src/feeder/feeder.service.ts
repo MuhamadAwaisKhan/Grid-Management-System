@@ -5,38 +5,75 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FeederEntity } from './feeder.entity';
 import { CreateFeederDto } from './dto/feeder.dto';
+import { SubstationEntity } from 'src/substation/substation.entity';
 
 @Injectable()
 export class FeederService {
   constructor(
+    @InjectRepository(SubstationEntity)
+    private readonly substationRepository: Repository<SubstationEntity>,
     @InjectRepository(FeederEntity)
     private readonly feederRepository: Repository<FeederEntity>,
   ) {}
 
-  async create(createFeederDto: CreateFeederDto): Promise<FeederEntity> {
-    const feeder = this.feederRepository.create(createFeederDto);
-    return await this.feederRepository.save(feeder);
+  async create(
+    createFeederDto: CreateFeederDto,substationId: number,
+    ): Promise< FeederEntity|object> {
+    const 
+      createdFeeder = this.feederRepository.create(createFeederDto);
+    if (substationId) {
+      const substation = await this.substationRepository.findOneBy({substationId: substationId});
+      if (!substation) {
+        throw new Error('Substation not found');
+      }
+
+      createdFeeder.substation = substation; }
+      console.log('createdFeeder -> ', createdFeeder);
+     // return {message: "In Development"}
+      return await this.feederRepository
+        .save(createdFeeder)
+        .then((res) => {
+          return {
+            message: 'Feeder Created Successfully',
+            data: res,
+          };
+        })
+        .catch((err) => {
+          return {
+            message: 'Feeder Created Successfully',
+            data: null,
+            error: err,
+          };
+        });
   }
 
   async findAll(): Promise<FeederEntity[]> {
-    return await this.feederRepository.find();
+    return await this.feederRepository.find({
+      relations: ['substation','maintenanceLogs','alarmLogs','powerOutages','breaker','transformer'],
+    });
   }
 
   async findOne(id: number): Promise<FeederEntity> {
     return await this.feederRepository.findOne({where:{feederId:id}});
   }
 
-  async update(id: number, updateFeederDto: CreateFeederDto): Promise<FeederEntity> {
+  async update(id: number, updateFeederDto: CreateFeederDto): Promise<FeederEntity|object > {
     const feeder = await this.feederRepository.findOne({where:{feederId:id}});
     if (!feeder) {
       throw new Error('Feeder not found');
     }
 
     this.feederRepository.merge(feeder, updateFeederDto);
-    return await this.feederRepository.save(feeder);
+    const Updatedfeeder= await this.feederRepository.save(feeder);
+    return {
+      message: 'Feeder Updated Successfully',
+      data: Updatedfeeder,
+    };
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<object> {
     await this.feederRepository.delete(id);
+    return {message: "Feeder Deleted Successfully"};
+
   }
 }

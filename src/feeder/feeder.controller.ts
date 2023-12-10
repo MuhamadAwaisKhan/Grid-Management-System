@@ -1,17 +1,32 @@
 // src/feeder/feeder.controller.ts
 
-import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { FeederService } from './feeder.service';
 import { CreateFeederDto } from './dto/feeder.dto';
 import { FeederEntity } from './feeder.entity';
+import { CreateSubstationDto } from 'src/Substation/dto/substation.dto';
 @UsePipes(ValidationPipe)
 @Controller('feeder')
 export class FeederController {
+  substationservice: any;
   constructor(private readonly feederService: FeederService) {}
 
-  @Post()
-  async create(@Body() createFeederDto: CreateFeederDto): Promise<FeederEntity> {
-    return this.feederService.create(createFeederDto);
+  @Post(':SubstationId')
+  async create(
+    @Body() CreateFeederDto: CreateFeederDto,
+      @Param('SubstationId') SubstationId: number,
+      ) {
+    return this.feederService.create(CreateFeederDto,SubstationId);
   }
 
   @Get()
@@ -28,12 +43,12 @@ export class FeederController {
   async update(
     @Param('id') id: string,
     @Body() updateFeederDto: CreateFeederDto,
-  ): Promise<FeederEntity> {
+  ){
     return this.feederService.update(+id, updateFeederDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.feederService.remove(+id);
   }
 }

@@ -22,9 +22,5 @@ export class CreateTransformerDto {
   @IsNotEmpty()
   @IsNumber()
   voltageLevel: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  feederId: number;
 
 }

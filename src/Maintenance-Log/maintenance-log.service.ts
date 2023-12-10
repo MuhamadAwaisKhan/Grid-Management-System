@@ -5,21 +5,88 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MaintenanceLogEntity } from './maintenance-log.entity';
 import { CreateMaintenanceLogDto } from './dto/maintenance-log.dto';
+import { FeederEntity } from 'src/feeder/feeder.entity';
+import { EmployeeEntity } from 'src/employee/employee.entity';
+import { scheduled } from 'rxjs';
 
 @Injectable()
 export class MaintenanceLogService {
   constructor(
+    @InjectRepository(EmployeeEntity)
+    private readonly employeeRepository: Repository<EmployeeEntity>,
+
+    @InjectRepository(FeederEntity)
+    private readonly feederRepository: Repository<FeederEntity>,
+
     @InjectRepository(MaintenanceLogEntity)
     private readonly maintenanceLogRepository: Repository<MaintenanceLogEntity>,
   ) {}
 
-  async create(createMaintenanceLogDto: CreateMaintenanceLogDto): Promise<MaintenanceLogEntity> {
-    const maintenanceLog = this.maintenanceLogRepository.create(createMaintenanceLogDto);
-    return await this.maintenanceLogRepository.save(maintenanceLog);
+  async create(createMaintenanceLogDto: CreateMaintenanceLogDto,
+    feederId: number, // Accept feederId as an argument
+    ): Promise<MaintenanceLogEntity| object
+    > {
+    const createdMaintenanceLog = this.maintenanceLogRepository.create(createMaintenanceLogDto);
+  if (feederId) {
+    const feeder = await this.feederRepository.findOneBy({feederId: feederId});
+    if (!feeder) {
+      throw new Error('Feeder not found');
+    }
+    createdMaintenanceLog.feeder = feeder;
+  }
+  console.log('createdMaintenanceLog -> ', createdMaintenanceLog);
+//   return {message: "In Development"}
+  return await this.maintenanceLogRepository
+    .save(createdMaintenanceLog)
+    .then((res) => {
+      return {
+        message: 'MaintenanceLog Created Successfully',
+        data: res,
+      };
+    })
+    .catch((err) => {
+      return {
+        message: 'MaintenanceLog Created Successfully',
+        data: null,
+        error: err,
+      };
+    });
   }
 
+//   async create(createMaintenanceLogDto: CreateMaintenanceLogDto,
+//     employeeId: number, // Accept feederId as an argument
+//     ): Promise<MaintenanceLogEntity| object
+//     > { 
+//     const createdMaintenanceLog = this.maintenanceLogRepository.create(createMaintenanceLogDto);
+//   if (employeeId) {
+//     const employee = await this.employeeRepository.findOneBy({employeeId: employeeId});
+//     if (!employee) {
+//       throw new Error('Employee not found');}
+//     createdMaintenanceLog.employee = employee;
+//   }
+//   console.log('createdMaintenanceLog -> ', createdMaintenanceLog);
+// //   return {message: "In Development"}
+//   return await this.maintenanceLogRepository
+//     .save(createdMaintenanceLog)
+//     .then((res) => {
+//       return {
+//         message: 'MaintenanceLog Created Successfully',
+//         data: res,
+//       };
+//     })
+//     .catch((err) => {
+//       return {
+//         message: 'MaintenanceLog Created Successfully',
+//         data: null,
+//         error: err,
+//       };
+//     });
+//   }
+
   async findAll(): Promise<MaintenanceLogEntity[]> {
-    return await this.maintenanceLogRepository.find();
+    return await this.maintenanceLogRepository.find({ 
+      relations:['feeder','employee','circuitBreakers','schedule']
+    });
   }
 
   async findOne(id: number): Promise<MaintenanceLogEntity> {

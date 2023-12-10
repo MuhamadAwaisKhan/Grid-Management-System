@@ -8,10 +8,6 @@ export class BillingEntity {
   @PrimaryGeneratedColumn()
   billingId: number;
 
-  @ManyToOne(() => CustomerEntity, customer => customer.billing)
-  @JoinColumn({ name: 'customerId' })
-  customer: CustomerEntity;
-
   @Column()
   billingDate: Date;
 
@@ -23,4 +19,9 @@ export class BillingEntity {
 
   @Column()
   paymentStatus: string;
+  
+  @ManyToOne(() => CustomerEntity, customer => customer.billing)
+  @JoinColumn({ name: 'customerId' })
+  customer: CustomerEntity;
+
 }

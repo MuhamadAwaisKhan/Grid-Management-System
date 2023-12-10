@@ -8,10 +8,12 @@ import { FaultEntity } from './fault.entity';
 @Controller('fault')
 export class FaultController {
   constructor(private readonly faultService: FaultService) {}
-
-  @Post()
-  async create(@Body() createFaultDto: CreateFaultDto): Promise<FaultEntity> {
-    return this.faultService.create(createFaultDto);
+  @Post(':substationId')
+  async create(
+    @Body() createFaultDto: CreateFaultDto,
+    @Param('substationId') substationId: number,
+  ) {
+    return this.faultService.create(createFaultDto, substationId);
   }
 
   @Get()
@@ -25,12 +27,12 @@ export class FaultController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateFaultDto: CreateFaultDto): Promise<FaultEntity> {
+  async update(@Param('id') id: string, @Body() updateFaultDto: CreateFaultDto){
     return this.faultService.update(+id, updateFaultDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.faultService.remove(+id);
   }
 }

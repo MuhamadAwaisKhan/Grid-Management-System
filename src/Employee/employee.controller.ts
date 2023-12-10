@@ -9,9 +9,12 @@ import { EmployeeEntity } from './employee.entity';
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @Post()
-  async create(@Body() createEmployeeDto: CreateEmployeeDto): Promise<EmployeeEntity> {
-    return this.employeeService.create(createEmployeeDto);
+  @Post(':substationId')
+  async create(
+    @Body() createEmployeeDto: CreateEmployeeDto,
+    @Param('substationId') substationId: number,
+  ) {
+    return this.employeeService.create(createEmployeeDto, substationId);
   }
 
   @Get()
@@ -28,12 +31,12 @@ export class EmployeeController {
   async update(
     @Param('id') id: string,
     @Body() updateEmployeeDto: CreateEmployeeDto,
-  ): Promise<EmployeeEntity> {
+  ) {
     return this.employeeService.update(+id, updateEmployeeDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.employeeService.remove(+id);
   }
 }

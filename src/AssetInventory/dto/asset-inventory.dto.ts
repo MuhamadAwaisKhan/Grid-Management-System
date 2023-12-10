@@ -20,8 +20,8 @@ export class CreateAssetInventoryDto {
   @IsNotEmpty()
   @IsString()
   status: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
 }

@@ -1,7 +1,8 @@
 // src/circuit-breaker/dto/circuit-breaker.dto.ts
 
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { CircuitBreakerStatus } from '../circuit-breaker.entity';
 
 export class CreateCircuitBreakerDto {
   @ApiProperty()
@@ -18,14 +19,13 @@ export class CreateCircuitBreakerDto {
   capacity: number;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  status: string;
-
+  @IsEnum(CircuitBreakerStatus)
+  status: CircuitBreakerStatus;
   // @IsNotEmpty()
   // @IsNumber()
   // substationId: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  mainId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // mainId: number;
 }

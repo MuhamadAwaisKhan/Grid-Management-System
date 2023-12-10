@@ -30,9 +30,9 @@ export class TransformerEntity {
 
   @ManyToOne(() => FeederEntity, feeder => feeder.transformer)
  @JoinColumn({ name: 'feederId' })
-  feeder: FeederEntity;
+  feeder1: FeederEntity;
 
-    @OneToMany(() => PowerMeterEntity, meter => meter.transformer)
+    @OneToMany(() => PowerMeterEntity, meter => meter.transformer1)
     @JoinColumn({ name: 'meterId' })
     meter: PowerMeterEntity;
   

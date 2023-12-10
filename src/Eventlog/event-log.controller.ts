@@ -8,11 +8,14 @@ import { EventLogEntity } from './event-log.entity';
 @Controller('event-log')
 export class EventLogController {
   constructor(private readonly eventLogService: EventLogService) {}
-
-  @Post()
-  async create(@Body() createEventLogDto: CreateEventLogDto): Promise<EventLogEntity> {
-    return this.eventLogService.create(createEventLogDto);
+  @Post(':substationId')
+  async create(
+    @Body() createEventLogDto: CreateEventLogDto,
+    @Param('substationId') substationId: number,
+  ) {
+    return this.eventLogService.create(createEventLogDto, substationId);
   }
+  
 
   @Get()
   async findAll(): Promise<EventLogEntity[]> {
@@ -28,12 +31,12 @@ export class EventLogController {
   async update(
     @Param('id') id: string,
     @Body() updateEventLogDto: CreateEventLogDto,
-  ): Promise<EventLogEntity> {
+  ) {
     return this.eventLogService.update(+id, updateEventLogDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.eventLogService.remove(+id);
   }
 }

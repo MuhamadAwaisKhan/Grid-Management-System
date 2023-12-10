@@ -14,7 +14,7 @@ export class PowerSupplierEntity {
   @Column()
   contactDetail: string;
  
-  @OneToMany(() => GridStationEntity, gridStation => gridStation.supplier)
+  @OneToMany(() => GridStationEntity, gridStation => gridStation.supplier, { nullable: true, cascade: true } )
   @JoinColumn({ name: 'supplierId' })
   gridstation: GridStationEntity;
 }

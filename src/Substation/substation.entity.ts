@@ -69,6 +69,7 @@ export class SubstationEntity {
   @OneToMany(() => EventLogEntity, eventLog => eventLog.substation)
   @JoinColumn({ name: 'eventId' })
   eventLogs: EventLogEntity;
+ 
   // @OneToMany(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.substation)
   // @JoinColumn({ name: 'breakerId' })
   // circuitBreakers: CircuitBreakerEntity;

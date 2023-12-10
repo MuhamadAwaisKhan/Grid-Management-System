@@ -20,10 +20,10 @@ export class CreatePowerOutageDto {
   // @IsNotEmpty()
   // @IsNumber()
   // substationId: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  feederId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // feederId: number;
 
   // @IsNotEmpty()
   // @IsNumber()

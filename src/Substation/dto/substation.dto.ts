@@ -6,18 +6,19 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateSubstationDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  //@IsString()
+  
   name: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+  //@IsNumber()
   capacity: number;
   @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
+ @IsNotEmpty()
+  //@IsNumber()
   voltageLevel: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  gridId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // gridId: number;
 }

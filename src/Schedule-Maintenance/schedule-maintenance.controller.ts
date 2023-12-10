@@ -8,12 +8,22 @@ import { ScheduleMaintenanceEntity } from './schedule-maintenance.entity';
 @Controller('schedule-maintenance')
 export class ScheduleMaintenanceController {
   constructor(private readonly scheduleMaintenanceService: ScheduleMaintenanceService) {}
-
-  @Post()
-  async create(@Body() createScheduleMaintenanceDto: CreateScheduleMaintenanceDto): Promise<ScheduleMaintenanceEntity> {
-    return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto);
+  @Post(':substationId')
+  async create(
+    @Body() createScheduleMaintenanceDto: CreateScheduleMaintenanceDto,
+    @Param('substationId') substationId: number,
+  ) {
+    return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto, substationId);
   }
-
+  // @Post(':mainId')
+  // async create(
+  //   @Body() createScheduleMaintenanceDto: CreateScheduleMaintenanceDto,
+  //     @Param('mainId') mainId: number,
+  //     ) {
+  //   return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto,mainId);
+  // }
+  // 
+  
   @Get()
   async findAll(): Promise<ScheduleMaintenanceEntity[]> {
     return this.scheduleMaintenanceService.findAll();
@@ -28,12 +38,12 @@ export class ScheduleMaintenanceController {
   async update(
     @Param('id') id: string,
     @Body() updateScheduleMaintenanceDto: CreateScheduleMaintenanceDto,
-  ): Promise<ScheduleMaintenanceEntity> {
+  ){
     return this.scheduleMaintenanceService.update(+id, updateScheduleMaintenanceDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string){
     return this.scheduleMaintenanceService.remove(+id);
   }
 }

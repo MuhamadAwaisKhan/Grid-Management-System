@@ -33,6 +33,7 @@ export class ScheduleMaintenanceEntity {
   // @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.scheduleMaintenances)
   // maintenanceLog: MaintenanceLogEntity;
   @OneToOne(() => MaintenanceLogEntity, (maintenanceLog) => maintenanceLog.schedule)
+  @JoinColumn({ name: 'mainId' })
   maintenanceLog: MaintenanceLogEntity;
 
   // @OneToOne(()=> MaintenanceLogEntity, (main) => main.schedule)

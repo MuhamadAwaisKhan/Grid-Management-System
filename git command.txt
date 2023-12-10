@@ -7,7 +7,7 @@ git add .
 git status
 
 
-git commit -m "first commit after creating repo"
+git commit -m "project ending's commit "
 
 git status
 
@@ -17,7 +17,7 @@ git branch -M main
 
 git log 
 
-git remote add origin https://github.com/hassan1811/Resume-Builder.git
+git remote add origin https://github.com/MuhamadAwaisKhan/Grid-Management-System.git
 
 git push -u origin main
 

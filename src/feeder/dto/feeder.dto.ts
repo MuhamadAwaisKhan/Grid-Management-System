@@ -20,8 +20,8 @@ export class CreateFeederDto {
   @IsNotEmpty()
   @IsNumber()
   capacity: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
 }

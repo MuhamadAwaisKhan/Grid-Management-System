@@ -17,10 +17,10 @@ export class CreateScheduleMaintenanceDto {
   // @IsNotEmpty()
   // @IsNumber()
   // employeeId: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
   // @ApiProperty()
   // @IsNotEmpty()
   // @IsNumber()
@@ -29,10 +29,10 @@ export class CreateScheduleMaintenanceDto {
   // @IsNotEmpty()
   // @IsNumber()
   // breakerId: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  feederId: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // feederId: number;
   // @ApiProperty()
   // @IsNotEmpty()
   // @IsNumber()

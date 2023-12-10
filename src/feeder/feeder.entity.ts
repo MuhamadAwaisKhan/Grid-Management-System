@@ -9,6 +9,7 @@ import { AlarmLogEntity } from 'src/AlarmLog/alarm-log.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { TransformerEntity } from 'src/transformer/transformer.entity';
 import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
+import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
 
 @Entity('Feeder')
 export class FeederEntity {
@@ -27,16 +28,16 @@ export class FeederEntity {
   @Column()
   capacity: number;
 
-  @OneToMany(() => TransformerEntity, transformer => transformer.feeder)
+  @OneToMany(() => TransformerEntity, transformer => transformer.feeder1)
   @JoinColumn({ name: 'transformerId' })
   transformer: TransformerEntity;
   @ManyToOne(() => SubstationEntity, substation => substation.feeder)
   @JoinColumn({ name: 'substationId' })
 substation: SubstationEntity;
   // One feeder can be associated with many event logs
-  // @OneToMany(() => EventLogEntity, eventLog => eventLog.feeder)
-  // @JoinColumn({ name: 'eventId' })
-  // eventLogs: EventLogEntity;
+  @OneToMany(() => CircuitBreakerEntity, breaker => breaker.feeder)
+  @JoinColumn({ name: 'breakerId' })
+  breaker: CircuitBreakerEntity;
 
   // One feeder can be associated with many schedule maintenance records
   // @OneToMany(() => ScheduleMaintenanceEntity, scheduleMaintenance => scheduleMaintenance.feeder)

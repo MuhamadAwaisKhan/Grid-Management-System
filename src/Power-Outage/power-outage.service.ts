@@ -5,21 +5,52 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PowerOutageEntity } from './power-outage.entity';
 import { CreatePowerOutageDto } from './dto/power-outage.dto';
+import { FeederEntity } from 'src/feeder/feeder.entity';
 
 @Injectable()
 export class PowerOutageService {
   constructor(
+    @InjectRepository(FeederEntity)
+    private readonly feederRepository: Repository<FeederEntity>,
+
     @InjectRepository(PowerOutageEntity)
     private readonly powerOutageRepository: Repository<PowerOutageEntity>,
   ) {}
 
-  async create(createPowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
-    const powerOutage = this.powerOutageRepository.create(createPowerOutageDto);
-    return await this.powerOutageRepository.save(powerOutage);
+  async create(createPowerOutageDto: CreatePowerOutageDto,
+    feederId: number, 
+    ): Promise<PowerOutageEntity | object> {
+    const createdPowerOutage = this.powerOutageRepository.create(createPowerOutageDto);
+  if (feederId) {
+    const feeder = await this.feederRepository.findOneBy({feederId: feederId});
+    if (!feeder) {
+      throw new Error('Feeder not found');
+    }
+    createdPowerOutage.feeder = feeder;
+  }
+  console.log('createdPowerOutage -> ', createdPowerOutage);
+//   return {message: "In Development"}
+  return await this.powerOutageRepository
+    .save(createdPowerOutage)
+    .then((res) => {
+      return {
+        message: 'PowerOutage Created Successfully',
+        data: res,
+      };
+    })
+    .catch((err) => {
+      return {
+        message: 'PowerOutage Created Successfully',
+        data: null,
+        error: err,
+      };
+    });
   }
 
   async findAll(): Promise<PowerOutageEntity[]> {
-    return await this.powerOutageRepository.find();
+    return await this.powerOutageRepository.find({
+      relations: ['feeder'],
+    });
   }
 
   async findOne(id: number): Promise<PowerOutageEntity> {

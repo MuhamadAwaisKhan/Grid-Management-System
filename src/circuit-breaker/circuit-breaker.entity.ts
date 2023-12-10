@@ -5,6 +5,7 @@ import { SubstationEntity } from '../substation/substation.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
+import { FeederEntity } from 'src/feeder/feeder.entity';
 export enum CircuitBreakerStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
@@ -32,9 +33,9 @@ export class CircuitBreakerEntity {
   status: CircuitBreakerStatus;
 
 
-  // @ManyToOne(() => SubstationEntity, substation => substation.circuitBreakers)
-  // @JoinColumn({ name: 'substationId' })
-  // substation: SubstationEntity;
+  @ManyToOne(() => FeederEntity, feeder => feeder.breaker)
+  @JoinColumn({ name: 'breakerId' })
+  feeder: FeederEntity;
   @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.circuitBreakers, { nullable: true })
   @JoinColumn({ name: 'mainId' })
   maintenanceLog: MaintenanceLogEntity;

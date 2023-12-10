@@ -21,8 +21,10 @@ units:Number;
   @ManyToOne(() => CustomerEntity, customer => customer.powermeter)
   @JoinColumn({ name: 'customerId' })
   customer: CustomerEntity;
+  
   @ManyToOne(() => TransformerEntity, transformer => transformer.meter)
   @JoinColumn({ name: 'transformerId' })
-  transformer: FeederEntity;
+
+  transformer1: TransformerEntity;
 
 }

@@ -13,31 +13,33 @@ export class PowerSupplierService {
     private readonly powerSupplierRepository: Repository<PowerSupplierEntity>,
   ) {}
 
-  async create(createPowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity> {
-    const powerSupplier = this.powerSupplierRepository.create(createPowerSupplierDto);
-    return await this.powerSupplierRepository.save(powerSupplier);
+  async create(createPowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity|object> {
+    const newPowerSupplier = this.powerSupplierRepository.create(createPowerSupplierDto);
+    const powerSupplier = await this.powerSupplierRepository.save(newPowerSupplier);
+    return { message: "Power Supplier Created Successfully", data: powerSupplier }
   }
 
   async findAll(): Promise<PowerSupplierEntity[]> {
-    return await this.powerSupplierRepository.find( { relations: ['gridstation']
-  });
+    return await this.powerSupplierRepository.find({ relations: ['gridstation'] });
   }
 
   async findOne(id: number): Promise<PowerSupplierEntity> {
     return await this.powerSupplierRepository.findOne({where:{supplierId:id}});
   }s
 
-  async update(id: number, updatePowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity> {
-    const powerSupplier = await this.powerSupplierRepository.findOne({where:{supplierId:id}});
-    if (!powerSupplier) {
+  async update(id: number, updatePowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity | object> {
+    const existingPowerSupplier = await this.powerSupplierRepository.findOne({ where: { supplierId: id } });
+    if (!existingPowerSupplier) {
       throw new Error('Power Supplier not found');
     }
 
-    this.powerSupplierRepository.merge(powerSupplier, updatePowerSupplierDto);
-    return await this.powerSupplierRepository.save(powerSupplier);
+    this.powerSupplierRepository.merge(existingPowerSupplier, updatePowerSupplierDto);
+    const updatedPowerSupplier = await this.powerSupplierRepository.save(existingPowerSupplier);
+    return { message: "Power Supplier Updated Successfully", data: updatedPowerSupplier }
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<object> {
     await this.powerSupplierRepository.delete(id);
+    return { message: "Power Supplier Deleted Successfully" }
   }
 }

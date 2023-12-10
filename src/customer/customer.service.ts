@@ -19,7 +19,7 @@ export class CustomerService {
   }
 
   async findAll(): Promise<CustomerEntity[]> {
-    return await this.customerRepository.find();
+    return await this.customerRepository.find({relations:['powermeter','billing']});
   }
 
   async findOne(id: number): Promise<CustomerEntity> {

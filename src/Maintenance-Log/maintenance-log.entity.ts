@@ -46,7 +46,7 @@ export class MaintenanceLogEntity {
   circuitBreakers: CircuitBreakerEntity;
 
   @OneToOne(() => ScheduleMaintenanceEntity, { cascade: true, nullable: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'maintenanceId'})
   schedule: ScheduleMaintenanceEntity;
 
   // One maintenance log can be associated with many schedule maintenance records

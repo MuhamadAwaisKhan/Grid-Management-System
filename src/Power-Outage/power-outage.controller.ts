@@ -9,9 +9,12 @@ import { PowerOutageEntity } from './power-outage.entity';
 export class PowerOutageController {
   constructor(private readonly powerOutageService: PowerOutageService) {}
 
-  @Post()
-  async create(@Body() createPowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
-    return this.powerOutageService.create(createPowerOutageDto);
+  @Post(':feederId')
+  async create(
+    @Body() createPowerOutageDto: CreatePowerOutageDto,
+      @Param('feederId') feederId: number,
+      ) {
+    return this.powerOutageService.create(createPowerOutageDto,feederId);
   }
 
   @Get()
@@ -28,12 +31,12 @@ export class PowerOutageController {
   async update(
     @Param('id') id: string,
     @Body() updatePowerOutageDto: CreatePowerOutageDto,
-  ): Promise<PowerOutageEntity> {
+  ) {
     return this.powerOutageService.update(+id, updatePowerOutageDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.powerOutageService.remove(+id);
   }
 }

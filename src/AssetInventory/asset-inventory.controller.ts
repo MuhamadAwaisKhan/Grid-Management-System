@@ -8,11 +8,15 @@ import { AssetInventoryEntity } from './asset-inventory.entity';
 @Controller('asset-inventory')
 export class AssetInventoryController {
   constructor(private readonly assetInventoryService: AssetInventoryService) {}
-
-  @Post()
-  async create(@Body() createAssetInventoryDto: CreateAssetInventoryDto): Promise<AssetInventoryEntity> {
-    return this.assetInventoryService.create(createAssetInventoryDto);
+  @Post(':SubstationId')
+  async create(
+    @Body() createAssetInventoryDto: CreateAssetInventoryDto,
+    @Param('SubstationId') SubstationId: number,
+  ) {
+    return this.assetInventoryService.create(createAssetInventoryDto, SubstationId);
   }
+
+  
 
   @Get()
   async findAll(): Promise<AssetInventoryEntity[]> {
@@ -28,12 +32,12 @@ export class AssetInventoryController {
   async update(
     @Param('id') id: string,
     @Body() updateAssetInventoryDto: CreateAssetInventoryDto,
-  ): Promise<AssetInventoryEntity> {
+  ){
     return this.assetInventoryService.update(+id, updateAssetInventoryDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.assetInventoryService.remove(+id);
   }
 }

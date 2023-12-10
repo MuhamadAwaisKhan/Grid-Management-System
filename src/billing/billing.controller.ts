@@ -4,16 +4,20 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { BillingService } from './billing.service';
 import { CreateBillingDto } from './dto/billing.dto';
 import { BillingEntity } from './billing.entity';
+import { CreateCustomerDto } from 'src/customer/dto/customer.dto';
 @UsePipes(ValidationPipe)
 @Controller('billing')
 export class BillingController {
   constructor(private readonly billingService: BillingService) {}
 
-  @Post()
-  async create(@Body() createBillingDto: CreateBillingDto): Promise<BillingEntity> {
-    return this.billingService.create(createBillingDto);
+  @Post(':customerId')
+  async create(
+    @Body() createBillingDto: CreateBillingDto,
+    @Param('customerId') customerId: number,
+  ) {
+    return this.billingService.create(createBillingDto, customerId);
   }
-
+  
   @Get()
   async findAll(): Promise<BillingEntity[]> {
     return this.billingService.findAll();
@@ -28,12 +32,12 @@ export class BillingController {
   async update(
     @Param('id') id: string,
     @Body() updateBillingDto: CreateBillingDto,
-  ): Promise<BillingEntity> {
+  ) {
     return this.billingService.update(+id, updateBillingDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string) {
     return this.billingService.remove(+id);
   }
 }

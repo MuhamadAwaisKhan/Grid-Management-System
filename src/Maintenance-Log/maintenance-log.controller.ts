@@ -8,12 +8,21 @@ import { MaintenanceLogEntity } from './maintenance-log.entity';
 @Controller('maintenance-log')
 export class MaintenanceLogController {
   constructor(private readonly maintenanceLogService: MaintenanceLogService) {}
-
-  @Post()
-  async create(@Body() createMaintenanceLogDto: CreateMaintenanceLogDto): Promise<MaintenanceLogEntity> {
-    return this.maintenanceLogService.create(createMaintenanceLogDto);
+  @Post(':feederId')
+  async create(
+    @Body() createMaintenanceLogDto: CreateMaintenanceLogDto,
+      @Param('feederId') feederId: number,
+      ) {
+    return this.maintenanceLogService.create(createMaintenanceLogDto,feederId);
   }
-
+  // @Post(':employeeId')
+  // async create(
+  //   @Body() createMaintenanceLogDto: CreateMaintenanceLogDto,
+  //   @Param('employeeId') employeeId: number,
+  // ) {
+  //   return this.maintenanceLogService.create(createMaintenanceLogDto, employeeId);
+  // }
+ 
   @Get()
   async findAll(): Promise<MaintenanceLogEntity[]> {
     return this.maintenanceLogService.findAll();
@@ -28,12 +37,13 @@ export class MaintenanceLogController {
   async update(
     @Param('id') id: string,
     @Body() updateMaintenanceLogDto: CreateMaintenanceLogDto,
-  ): Promise<MaintenanceLogEntity> {
+  ) {
     return this.maintenanceLogService.update(+id, updateMaintenanceLogDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.maintenanceLogService.remove(+id);
+  async remove(@Param('id') id: string){
+     this.maintenanceLogService.remove(+id);
+      return {message:"MaintenanceLog Deleted Successfully"}
   }
 }
