@@ -1,8 +1,6 @@
 // src/power-meter/power-meter.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
-import { FeederEntity } from '../feeder/feeder.entity';
 import { CustomerEntity } from 'src/customer/customer.entity';
 import { TransformerEntity } from 'src/transformer/transformer.entity';
 

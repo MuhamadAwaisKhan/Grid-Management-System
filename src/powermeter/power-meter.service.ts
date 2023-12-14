@@ -6,10 +6,14 @@ import { Repository } from 'typeorm';
 import { PowerMeterEntity } from './power-meter.entity';
 import { CreatePowerMeterDto } from './dto/power-meter.dto';
 import { TransformerEntity } from 'src/transformer/transformer.entity';
+import { CustomerEntity } from 'src/customer/customer.entity';
 
 @Injectable()
 export class PowerMeterService {
   constructor(
+    @InjectRepository(CustomerEntity)
+    private readonly customerRepository: Repository<CustomerEntity>,
+ 
     @InjectRepository(TransformerEntity)
     private readonly transformerRepository: Repository<TransformerEntity>,
  
@@ -19,6 +23,8 @@ export class PowerMeterService {
 
   async create(createPowerMeterDto: CreatePowerMeterDto,
     transformerId: number,
+    customerId: number,
+
     ): Promise<PowerMeterEntity| object> {
     const createdPowerMeter = this.powerMeterRepository.create(createPowerMeterDto);
     if (transformerId) {
@@ -28,6 +34,13 @@ export class PowerMeterService {
       }
       
       createdPowerMeter.transformer1 = transformer; }
+      if(customerId){
+        const customer = await this.customerRepository.findOneBy({customerId:customerId});
+        if (!customer) {
+          throw new Error('Customer not found');
+        }
+        
+        createdPowerMeter.customer = customer; }
     console.log('createdPowerMeter -> ', createdPowerMeter);
     // return {message: "In Development"}
     return await this.powerMeterRepository
@@ -45,35 +58,7 @@ export class PowerMeterService {
           error: err,
         };
       }); }
-  // async create(createPowerMeterDto: CreatePowerMeterDto,
-  //   customerId: number,
-  //   ): Promise<PowerMeterEntity| object> {
-  //   const createdPowerMeter = this.powerMeterRepository.create(createPowerMeterDto);
-  //   if(customerId){
-  //     const customer = await this.customerRepository.findOneBy({customerId:customerId});
-  //     if (!customer) {
-  //       throw new Error('Customer not found');
-  //     }
-      
-  //     createdPowerMeter.customer1 = customer; }
-  //   console.log('createdPowerMeter -> ', createdPowerMeter);
-  //   // return {message: "In Development"}
-  //   return await this.powerMeterRepository
-  //     .save(createdPowerMeter)
-  //     .then((res) => {
-  //       return {
-  //         message: 'PowerMeter Created Successfully',
-  //         data: res,
-  //       };
-  //     })
-  //     .catch((err) => {
-  //       return {
-  //         message: 'PowerMeter Created Successfully',
-  //         data: null,
-  //         error: err,
-  //       };
-  //     });
-    // }
+  
   async findAll(): Promise<PowerMeterEntity[]> {
     return await this.powerMeterRepository.find({
       relations: ['transformer1','customer'],

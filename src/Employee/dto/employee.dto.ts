@@ -6,15 +6,15 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateEmployeeDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   name: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   role: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   contactInfo: string;
   // @ApiProperty()
   // @IsNotEmpty()

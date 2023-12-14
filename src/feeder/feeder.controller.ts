@@ -14,7 +14,6 @@ import {
 import { FeederService } from './feeder.service';
 import { CreateFeederDto } from './dto/feeder.dto';
 import { FeederEntity } from './feeder.entity';
-import { CreateSubstationDto } from 'src/Substation/dto/substation.dto';
 @UsePipes(ValidationPipe)
 @Controller('feeder')
 export class FeederController {

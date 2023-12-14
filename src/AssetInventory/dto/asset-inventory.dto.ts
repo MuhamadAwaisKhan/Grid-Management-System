@@ -6,19 +6,19 @@ import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
 export class CreateAssetInventoryDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+
   assetType: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+
   srNumber: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  installationDate: Date;
+ 
+  installationDate: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   status: string;
   // @ApiProperty()
   // @IsNotEmpty()

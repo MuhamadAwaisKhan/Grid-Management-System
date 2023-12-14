@@ -5,13 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FaultEntity } from './fault.entity';
 import { CreateFaultDto } from './dto/fault.dto';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+
 
 @Injectable()
 export class FaultService {
   constructor(
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
+    @InjectRepository(NewSubStationEntity)
+    private readonly substationRepository: Repository<NewSubStationEntity>,
 
     @InjectRepository(FaultEntity)
     private readonly faultRepository: Repository<FaultEntity>,
@@ -24,12 +25,12 @@ export class FaultService {
     const createdFault = this.faultRepository.create(createFaultDto);
   if (substationId) {
     const substation = await this.substationRepository.findOneBy(
-      { substationId: substationId },
+      { id: substationId },
     );
     if (!substation) {
       throw new Error('Substation not found');
     }
-    createdFault.substation = substation;
+     createdFault.substation = substation;
   }
   console.log('createdFault -> ', createdFault);
   // return {message: "In Development"}

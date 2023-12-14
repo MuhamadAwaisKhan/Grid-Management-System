@@ -5,14 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EmployeeEntity } from './employee.entity';
 import { CreateEmployeeDto } from './dto/employee.dto';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+import { Console } from 'console';
+
 
 @Injectable()
 export class EmployeeService {
   constructor(
    
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
+    @InjectRepository(NewSubStationEntity)
+    private readonly substationRepository: Repository<NewSubStationEntity>,
     @InjectRepository(EmployeeEntity)
     private readonly employeeRepository: Repository<EmployeeEntity>,
   ) {}
@@ -21,19 +23,24 @@ export class EmployeeService {
     createEmployeeDto: CreateEmployeeDto,
     substationId: number, // Accept substationId as an argument
     ): Promise<EmployeeEntity| object> {
-    const createdEmployee =
+      console.log('CreateEmployeeDto ->',CreateEmployeeDto);
+      
+    let createdEmployee =
       this.employeeRepository.create(createEmployeeDto);
+      console.log("createdEmployee ->",createdEmployee)
     
     if (substationId) {
-      const substation = await this.substationRepository.findOneBy({substationId:substationId});
+      const substation = await this.substationRepository.findOneBy({id:substationId});
+      
+    
       if (!substation) {
         throw new Error('Substation not found');
       }
 
-      createdEmployee.substation = substation;
+       createdEmployee.substation = substation;
     }
 
-    console.log('createdEmployee -> ', createdEmployee);
+   // console.log('createdEmployee -> ', createdEmployee);
     // return {message: "In Development"}
 
     return await this.employeeRepository

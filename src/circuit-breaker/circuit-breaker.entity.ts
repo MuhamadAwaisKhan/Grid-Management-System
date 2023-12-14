@@ -1,7 +1,6 @@
 // src/circuit-breaker/circuit-breaker.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';

@@ -5,13 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AssetInventoryEntity } from './asset-inventory.entity';
 import { CreateAssetInventoryDto } from './dto/asset-inventory.dto';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+
 
 @Injectable()
 export class AssetInventoryService {
   constructor(
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
+    @InjectRepository(NewSubStationEntity)
+    private readonly substationRepository: Repository<NewSubStationEntity>,
 
     @InjectRepository(AssetInventoryEntity)
     private readonly assetInventoryRepository: Repository<AssetInventoryEntity>,
@@ -25,13 +26,13 @@ export class AssetInventoryService {
     const createdAssetInventory =this.assetInventoryRepository.create(createAssetInventoryDto);
     if (substationId) {
       const substation = await this.substationRepository.findOneBy({
-        substationId: substationId,
+        id: substationId,
       });
       if (!substation) {
         throw new Error('Substation not found');
       }
 
-      createdAssetInventory.substation = substation;
+       createdAssetInventory.substation = substation;
     }
     console.log('createdAssetInventory -> ', createdAssetInventory);
     // return {message: "In Development"}

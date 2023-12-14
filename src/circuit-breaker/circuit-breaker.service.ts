@@ -6,10 +6,14 @@ import { Repository } from 'typeorm';
 import { CircuitBreakerEntity } from './circuit-breaker.entity';
 import { CreateCircuitBreakerDto } from './dto/circuit-breaker.dto';
 import { FeederEntity } from 'src/feeder/feeder.entity';
+import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 
 @Injectable()
 export class CircuitBreakerService {
   constructor(
+    @InjectRepository(MaintenanceLogEntity)
+    private readonly maintenanceLogRepository: Repository<MaintenanceLogEntity>,
+
     @InjectRepository(FeederEntity)
     private readonly feederRepository: Repository<FeederEntity>,
  
@@ -20,16 +24,27 @@ export class CircuitBreakerService {
   async create(
     createCircuitBreakerDto: CreateCircuitBreakerDto,
     feederId: number, 
+    mainId: number,
     ): Promise<CircuitBreakerEntity |object> {
     const 
       createdCircuitBreaker = this.circuitBreakerRepository.create(createCircuitBreakerDto);
     if (feederId) {
-      const feeder = await this.feederRepository.findOneBy({feederId: feederId});
+      const feeder = await this.feederRepository.findOneBy({feederId: feederId
+      });
       if (!feeder) {
         throw new Error('Feeder not found');
       }
 
       createdCircuitBreaker.feeder = feeder; }
+      
+    
+      if (mainId) {
+        const main = await this.maintenanceLogRepository.findOneBy({ mainId: mainId });
+        if (!main) {
+          throw new Error('Maintenance Log not found');
+        }
+        createdCircuitBreaker.maintenanceLog = main;
+      }
       console.log('createdCircuitBreaker -> ', createdCircuitBreaker);
       // return {message: "In Development"}
       return await this.circuitBreakerRepository

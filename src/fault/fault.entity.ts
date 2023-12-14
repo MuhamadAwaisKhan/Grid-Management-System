@@ -1,7 +1,8 @@
 // src/fault/fault.entity.ts
 
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
+
 
 @Entity('Fault')
 export class FaultEntity {
@@ -15,7 +16,7 @@ export class FaultEntity {
   description: string;
 
   @Column()
-  date: Date;
+  date: string;
 
   @Column()
   status: string;
@@ -23,7 +24,7 @@ export class FaultEntity {
   @Column()
   type: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.faults)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.faults)
   @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  substation: NewSubStationEntity;
 }

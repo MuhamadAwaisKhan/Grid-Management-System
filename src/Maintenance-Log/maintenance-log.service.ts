@@ -24,6 +24,7 @@ export class MaintenanceLogService {
 
   async create(createMaintenanceLogDto: CreateMaintenanceLogDto,
     feederId: number, // Accept feederId as an argument
+    employeeId: number, // Accept feederId as an argument
     ): Promise<MaintenanceLogEntity| object
     > {
     const createdMaintenanceLog = this.maintenanceLogRepository.create(createMaintenanceLogDto);
@@ -33,6 +34,14 @@ export class MaintenanceLogService {
       throw new Error('Feeder not found');
     }
     createdMaintenanceLog.feeder = feeder;
+  }
+
+  if (employeeId) {
+    const emplyee = await this.employeeRepository.findOneBy({employeeId: employeeId});
+    if (!emplyee) {
+      throw new Error('Feeder not found');
+    }
+    createdMaintenanceLog.employee = emplyee;
   }
   console.log('createdMaintenanceLog -> ', createdMaintenanceLog);
 //   return {message: "In Development"}

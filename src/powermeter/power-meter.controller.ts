@@ -10,12 +10,13 @@ import { CreateCustomerDto } from 'src/customer/dto/customer.dto';
 export class PowerMeterController {
   constructor(private readonly powerMeterService: PowerMeterService) {}
 
-  @Post(':transformerId')
+  @Post(':transformerId/:customerId')
   async create(
     @Body() createPowerMeterDto: CreatePowerMeterDto,
+    @Param('customerId') customerId: number,
       @Param('transformerId') transformerId: number,
       ) {
-    return this.powerMeterService.create(createPowerMeterDto,transformerId);
+    return this.powerMeterService.create(createPowerMeterDto,transformerId,customerId);
   }
   // @Post(':customerId')
   // async create(

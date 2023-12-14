@@ -1,10 +1,10 @@
 // src/event-log/event-log.entity.ts
 
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
-import { TransformerEntity } from '../transformer/transformer.entity';
-import { CircuitBreakerEntity} from '../circuit-breaker/circuit-breaker.entity';
-import { FeederEntity} from '../feeder/feeder.entity';
+
+
+
 
 @Entity('EventLog')
 export class EventLogEntity {
@@ -15,11 +15,11 @@ export class EventLogEntity {
   description: string;
 
   @Column()
-  date: Date;
+  date: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.eventLogs)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.eventLogs)
   @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  substation: NewSubStationEntity;
 
   // @ManyToOne(() => TransformerEntity, transformer => transformer.eventLogs)
   // @JoinColumn({ name: 'transformerId' })

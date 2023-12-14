@@ -17,34 +17,36 @@ export class PowerOutageService {
     private readonly powerOutageRepository: Repository<PowerOutageEntity>,
   ) {}
 
-  async create(createPowerOutageDto: CreatePowerOutageDto,
-    feederId: number, 
-    ): Promise<PowerOutageEntity | object> {
-    const createdPowerOutage = this.powerOutageRepository.create(createPowerOutageDto);
-  if (feederId) {
-    const feeder = await this.feederRepository.findOneBy({feederId: feederId});
-    if (!feeder) {
-      throw new Error('Feeder not found');
+  async create(createPowerOutageDto: CreatePowerOutageDto, feederId: number): Promise<PowerOutageEntity | object> {
+    console.log('createPowerOutageDto -> ', createPowerOutageDto);
+    
+    let createdPowerOutage = this.powerOutageRepository.create(createPowerOutageDto);
+    console.log('createdPowerOutage -> ', createdPowerOutage); 
+
+    if (feederId) {
+      const feeder = await this.feederRepository.findOneBy({ feederId: feederId });
+   
+      if (!feeder) {
+        throw new Error('Feeder not found');
+      }
+      createdPowerOutage.feeder = feeder;
     }
-    createdPowerOutage.feeder = feeder;
-  }
-  console.log('createdPowerOutage -> ', createdPowerOutage);
-//   return {message: "In Development"}
-  return await this.powerOutageRepository
-    .save(createdPowerOutage)
-    .then((res) => {
-      return {
-        message: 'PowerOutage Created Successfully',
-        data: res,
-      };
-    })
-    .catch((err) => {
-      return {
-        message: 'PowerOutage Created Successfully',
-        data: null,
-        error: err,
-      };
-    });
+
+    return await this.powerOutageRepository
+      .save(createdPowerOutage)
+      .then((res) => {
+        return {
+          message: 'PowerOutage Created Successfully',
+          data: res,
+        };
+      })
+      .catch((err) => {
+        return {
+          message: 'PowerOutage Created Successfully',
+          data: null,
+          error: err,
+        };
+      });
   }
 
   async findAll(): Promise<PowerOutageEntity[]> {
@@ -54,11 +56,11 @@ export class PowerOutageService {
   }
 
   async findOne(id: number): Promise<PowerOutageEntity> {
-    return await this.powerOutageRepository.findOne({where:{outageId:id}});
+    return await this.powerOutageRepository.findOne({ where: { outageId: id } });
   }
 
   async update(id: number, updatePowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
-    const powerOutage = await this.powerOutageRepository.findOne({where:{outageId:id}});
+    const powerOutage = await this.powerOutageRepository.findOne({ where: { outageId: id } });
     if (!powerOutage) {
       throw new Error('Power Outage not found');
     }

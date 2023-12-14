@@ -2,7 +2,6 @@
 
 import { BillingEntity } from 'src/billing/billing.entity';
 import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
-import { SubstationEntity } from 'src/substation/substation.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('Customer')

@@ -1,7 +1,8 @@
 // src/asset-inventory/asset-inventory.entity.ts
 
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
+
 
 @Entity('AssetInventory')
 export class AssetInventoryEntity {
@@ -15,12 +16,12 @@ export class AssetInventoryEntity {
   srNumber: string;
 
   @Column()
-  installationDate: Date;
+  installationDate: string;
 
   @Column()
   status: string;
 
-  @ManyToOne(() => SubstationEntity, substation => substation.assetInventories)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.assetInventories)
   @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  substation: NewSubStationEntity;
 }

@@ -2,11 +2,12 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { EmployeeEntity } from '../employee/employee.entity';
-import { SubstationEntity } from '../substation/substation.entity';
+
 import { TransformerEntity } from '../transformer/transformer.entity';
 import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
 import { FeederEntity } from '../feeder/feeder.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
 @Entity('ScheduleMaintenance')
 export class ScheduleMaintenanceEntity {
@@ -17,19 +18,15 @@ export class ScheduleMaintenanceEntity {
   description: string;
 
   @Column()
-  date: Date;
+  date: string;
 
-  // @ManyToOne(() => EmployeeEntity, employee => employee.scheduleMaintenances)
-  // @JoinColumn({ name: 'employeeId' })
-  // employee: EmployeeEntity;
+ 
 
-  @ManyToOne(() => SubstationEntity, substation => substation.scheduledMaintenances)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.scheduledMaintenances)
   @JoinColumn({ name: 'substationId' })
-  substation: SubstationEntity;
+  substation: NewSubStationEntity;
 
-  // @ManyToOne(() => TransformerEntity, transformer => transformer.scheduledMaintenances)
-  // @JoinColumn({ name: 'transformerId' })
-  // transformer: TransformerEntity;
+ 
   // @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.scheduleMaintenances)
   // maintenanceLog: MaintenanceLogEntity;
   @OneToOne(() => MaintenanceLogEntity, (maintenanceLog) => maintenanceLog.schedule)
@@ -39,15 +36,7 @@ export class ScheduleMaintenanceEntity {
   // @OneToOne(()=> MaintenanceLogEntity, (main) => main.schedule)
   // main: MaintenanceLogEntity
 
-  // // Many schedule maintenance records can be associated with one circuit breaker
-  // @ManyToOne(() => CircuitBreakerEntity, circuitBreaker => circuitBreaker.scheduleMaintenances)
-  // @JoinColumn({ name: 'breakerId' })
-  // circuitBreaker: CircuitBreakerEntity;
+ 
 
 
-
-
-  // @ManyToOne(() => FeederEntity, feeder => feeder.scheduleMaintenances)
-  // @JoinColumn({ name: 'feederId' })
-  // feeder: FeederEntity;
 }

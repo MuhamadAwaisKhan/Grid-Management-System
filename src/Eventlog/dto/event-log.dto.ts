@@ -6,23 +6,14 @@ import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
 export class CreateEventLogDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  description: string;
+ description: string;
+
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  date: Date;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
-  @ApiProperty()
-  @IsNumber()
-  transformerId: number;
-  @ApiProperty()
-  @IsNumber()
-  breakerId: number;
-  @ApiProperty()
-  @IsNumber()
-  feederId: number;
+  date: string;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
+ 
 }

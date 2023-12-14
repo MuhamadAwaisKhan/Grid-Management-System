@@ -6,26 +6,13 @@ import { IsNotEmpty, IsDate, IsString, IsNumber } from 'class-validator';
 export class CreatePowerOutageDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  outageStartTime: Date;
+  outageStartTime: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  outageEndTime: Date;
+   outageEndTime: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  cause: string;
+   cause: string;
 
-  // @IsNotEmpty()
-  // @IsNumber()
-  // substationId: number;
-  // @ApiProperty()
-  // @IsNotEmpty()
-  // @IsNumber()
-  // feederId: number;
-
-  // @IsNotEmpty()
-  // @IsNumber()
-  // transformerId: number;
+  
 }

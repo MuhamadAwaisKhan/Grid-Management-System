@@ -1,7 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Module } from '@nestjs/common';
-import { SubstationEntity } from './substation.entity';
 
 import { SubstationService } from './substation.service';
 import { SubstationController } from './substation.controller';
@@ -12,11 +11,12 @@ import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-mai
 import { AssetInventoryEntity } from 'src/AssetInventory/asset-inventory.entity';
 import { FaultEntity } from 'src/fault/fault.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
+import { NewSubStationEntity } from './newsubstation.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      SubstationEntity,
+      NewSubStationEntity,
       GridStationEntity,
       FeederEntity,
       EmployeeEntity,

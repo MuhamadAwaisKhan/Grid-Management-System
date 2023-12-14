@@ -9,12 +9,13 @@ import { CircuitBreakerEntity } from './circuit-breaker.entity';
 export class CircuitBreakerController {
   constructor(private readonly circuitBreakerService: CircuitBreakerService) {}
 
-  @Post(':feedId')
+  @Post(':feederId/:mainId')
   async create(
     @Body() createCircuitBreakerDto: CreateCircuitBreakerDto,
+    @Param('mainId') mainId: number,
       @Param('feederId') feederId: number,
       ) {
-    return this.circuitBreakerService.create(createCircuitBreakerDto,feederId);
+    return this.circuitBreakerService.create(createCircuitBreakerDto,feederId,mainId);
   }
   
 

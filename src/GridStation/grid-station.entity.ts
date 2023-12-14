@@ -1,7 +1,8 @@
 // src/grid-station/grid-station.entity.ts
 
 import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+
 import { TransformerEntity } from 'src/transformer/transformer.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 
@@ -21,9 +22,9 @@ export class GridStationEntity {
 
   @Column()
   voltageLevel: number;
-  @OneToMany(() => SubstationEntity, substation => substation.gridStation)
+  @OneToMany(() => NewSubStationEntity, substation => substation.gridStation)
   @JoinColumn({ name: 'substationId' })
-  substations: SubstationEntity;
+  substations: NewSubStationEntity;
  
   @ManyToOne(() => PowerSupplierEntity, supplier => supplier.gridstation,{ nullable: true })
   @JoinColumn({ name: 'supplierId' })

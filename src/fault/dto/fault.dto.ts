@@ -6,26 +6,29 @@ import { IsNotEmpty, IsString, IsDate, IsBoolean, IsNumber } from 'class-validat
 export class CreateFaultDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsBoolean()
+  
   faulted: boolean;
+
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   description: string;
+
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  date: Date;
+  date: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   status: string;
+
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+
   type: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  substationId: number;
+
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // substationId: number;
 }

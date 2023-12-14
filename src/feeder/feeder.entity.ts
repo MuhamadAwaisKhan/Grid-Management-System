@@ -1,7 +1,6 @@
 // src/feeder/feeder.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { PowerOutageEntity } from 'src/Power-Outage/power-outage.entity';
@@ -10,6 +9,7 @@ import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity
 import { TransformerEntity } from 'src/transformer/transformer.entity';
 import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
 import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
 @Entity('Feeder')
 export class FeederEntity {
@@ -31,9 +31,9 @@ export class FeederEntity {
   @OneToMany(() => TransformerEntity, transformer => transformer.feeder1)
   @JoinColumn({ name: 'transformerId' })
   transformer: TransformerEntity;
-  @ManyToOne(() => SubstationEntity, substation => substation.feeder)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.feeder)
   @JoinColumn({ name: 'substationId' })
-substation: SubstationEntity;
+substation: NewSubStationEntity;
   // One feeder can be associated with many event logs
   @OneToMany(() => CircuitBreakerEntity, breaker => breaker.feeder)
   @JoinColumn({ name: 'breakerId' })

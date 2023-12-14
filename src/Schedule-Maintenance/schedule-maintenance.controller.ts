@@ -8,22 +8,15 @@ import { ScheduleMaintenanceEntity } from './schedule-maintenance.entity';
 @Controller('schedule-maintenance')
 export class ScheduleMaintenanceController {
   constructor(private readonly scheduleMaintenanceService: ScheduleMaintenanceService) {}
-  @Post(':substationId')
+  @Post(':substationId/:mainId')
   async create(
     @Body() createScheduleMaintenanceDto: CreateScheduleMaintenanceDto,
     @Param('substationId') substationId: number,
+    @Param('mainId') mainId: number,
   ) {
-    return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto, substationId);
+    return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto, substationId, mainId);
   }
-  // @Post(':mainId')
-  // async create(
-  //   @Body() createScheduleMaintenanceDto: CreateScheduleMaintenanceDto,
-  //     @Param('mainId') mainId: number,
-  //     ) {
-  //   return this.scheduleMaintenanceService.create(createScheduleMaintenanceDto,mainId);
-  // }
-  // 
-  
+ 
   @Get()
   async findAll(): Promise<ScheduleMaintenanceEntity[]> {
     return this.scheduleMaintenanceService.findAll();

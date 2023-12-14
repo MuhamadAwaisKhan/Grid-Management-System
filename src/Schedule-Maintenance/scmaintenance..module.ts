@@ -5,10 +5,10 @@ import { ScheduleMaintenanceEntity } from "./schedule-maintenance.entity";
 import { ScheduleMaintenanceController } from "./schedule-maintenance.controller";
 import { ScheduleMaintenanceService } from "./schedule-maintenance.service";
 import { MaintenanceLogEntity } from "src/Maintenance-Log/maintenance-log.entity";
-import { SubstationEntity } from "src/substation/substation.entity";
+import { NewSubStationEntity } from "src/Substation/newsubstation.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ScheduleMaintenanceEntity,MaintenanceLogEntity,SubstationEntity])],
+    imports: [TypeOrmModule.forFeature([ScheduleMaintenanceEntity,MaintenanceLogEntity,NewSubStationEntity])],
     controllers: [ScheduleMaintenanceController],
     providers: [ScheduleMaintenanceService],
   })

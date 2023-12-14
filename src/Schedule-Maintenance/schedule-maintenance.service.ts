@@ -5,84 +5,60 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ScheduleMaintenanceEntity } from './schedule-maintenance.entity';
 import { CreateScheduleMaintenanceDto } from './dto/schedule-maintenance.dto';
-import { SubstationEntity } from 'src/substation/substation.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
 @Injectable()
 export class ScheduleMaintenanceService {
   constructor(
-    
     @InjectRepository(MaintenanceLogEntity)
     private readonly maintenanceLogRepository: Repository<MaintenanceLogEntity>,
 
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
+    @InjectRepository(NewSubStationEntity)
+    private readonly substationRepository: Repository<NewSubStationEntity>,
     @InjectRepository(ScheduleMaintenanceEntity)
     private readonly maintenanceRepository: Repository<ScheduleMaintenanceEntity>,
   ) {}
 
   async create(
     createMaintenanceDto: CreateScheduleMaintenanceDto,
+    mainId: number, // Accept mainId as an argument
     substationId: number, // Accept substationId as an argument
-    ): Promise<ScheduleMaintenanceEntity |object> {
-   const createdMaintenance = this.maintenanceRepository.create(createMaintenanceDto); 
+  ): Promise<ScheduleMaintenanceEntity | object> {
+    const createdMaintenance = this.maintenanceRepository.create(createMaintenanceDto);
+
     if (substationId) {
-      const substation = await this.substationRepository.findOneBy({substationId:substationId});
+      const substation = await this.substationRepository.findOneBy({ id: substationId });
       if (!substation) {
         throw new Error('Substation not found');
       }
       createdMaintenance.substation = substation;
-  }
-  console.log('createdMaintenance -> ', createdMaintenance);
-// return {message: "In Development"}
-return await this.maintenanceRepository
-.save(createdMaintenance)
-.then((res) => {
-  return {
-    message: 'Schedule Maintenance record Created Successfully',
-    data: res,
-  };
-})
-.catch((err) => {
-  return {
-    message: 'Schedule Maintenance record Created Successfully',
-    data: null,
-    error: err,
-  };
-});
-}
-// async create(
-//   createMaintenanceDto: CreateScheduleMaintenanceDto,
-//   mainId: number, // Accept substationId as an argument
-//   ): Promise<ScheduleMaintenanceEntity |object> {
-//   const createdMaintenance = this.maintenanceRepository.create(createMaintenanceDto);
-//   if (mainId) {
-//     const main = await this.maintenanceLogRepository.findOneBy({mainId:mainId});
-//     if (!main) {
-//       throw new Error('Main not found');
-//     }
-//     createdMaintenance.maintenanceLog = main;
+    }
 
-//   }
-//   console.log('createdMaintenance -> ', createdMaintenance);
-// // return {message: "In Development"}
-// return await this.maintenanceRepository
-// .save(createdMaintenance)
-// .then((res) => {
-//   return {
-//     message: 'Schedule Maintenance record Created Successfully',
-//     data: res,
-//   };
-// }
-// )
-// .catch((err) => {
-//   return {
-//     message: 'Schedule Maintenance record Created Successfully',
-//     data: null,
-//     error: err,
-// };
-// });
-//   }
+    if (mainId) {
+      const main = await this.maintenanceLogRepository.findOneBy({ mainId: mainId });
+      if (!main) {
+        throw new Error('Maintenance Log not found');
+      }
+      createdMaintenance.maintenanceLog = main;
+    }
+
+    console.log('createdMaintenance -> ', createdMaintenance);
+
+    try {
+      const savedMaintenance = await this.maintenanceRepository.save(createdMaintenance);
+      return {
+        message: 'Schedule Maintenance record Created Successfully',
+        data: savedMaintenance,
+      };
+    } catch (err) {
+      return {
+        message: 'Failed to create Schedule Maintenance record',
+        data: null,
+        error: err.message || err,
+      };
+    }
+  }
 
   async findAll(): Promise<ScheduleMaintenanceEntity[]> {
     return await this.maintenanceRepository.find({

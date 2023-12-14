@@ -1,7 +1,6 @@
 // src/power-outage/power-outage.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { SubstationEntity } from '../substation/substation.entity';
 import { FeederEntity } from '../feeder/feeder.entity';
 import { TransformerEntity } from '../transformer/transformer.entity';
 
@@ -11,10 +10,10 @@ export class PowerOutageEntity {
   outageId: number;
 
   @Column()
-  outageStartTime: Date;
+  outageStartTime: string;
 
   @Column()
-  outageEndTime: Date;
+  outageEndTime: string;
 
   @Column()
   cause: string;

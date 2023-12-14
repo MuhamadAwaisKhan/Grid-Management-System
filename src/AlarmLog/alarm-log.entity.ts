@@ -1,7 +1,6 @@
 // src/alarm-log/alarm-log.entity.ts
 
 
-import { SubstationEntity } from '../substation/substation.entity';
 import { FeederEntity } from 'src/feeder/feeder.entity';
 import { TransformerEntity } from '../transformer/transformer.entity';
 import { Entity, ManyToOne, Column, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
@@ -17,7 +16,7 @@ export class AlarmLogEntity {
   description: string;
 
   @Column()
-  timestamp: Date;
+  timestamp: string;
 
   @Column()
   severityLevel: string;

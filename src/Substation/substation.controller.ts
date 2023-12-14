@@ -12,8 +12,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { SubstationService } from './substation.service';
-import { CreateSubstationDto } from './dto/substation.dto';
-import { SubstationEntity } from './substation.entity';
+import CreateSubstationDto from './dto/create_substation.dto';
+import { NewSubStationEntity } from './newsubstation.entity';
 
 @UsePipes(ValidationPipe)
 @Controller('substation')
@@ -29,12 +29,12 @@ export class SubstationController {
   }
 
   @Get()
-  async findAll(): Promise<SubstationEntity[]> {
+  async findAll(): Promise<NewSubStationEntity[]> {
     return this.substationService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<SubstationEntity> {
+  async findOne(@Param('id') id: string): Promise<NewSubStationEntity> {
     return this.substationService.findOne(+id);
   }
 

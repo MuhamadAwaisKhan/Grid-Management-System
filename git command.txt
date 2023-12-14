@@ -7,7 +7,7 @@ git add .
 git status
 
 
-git commit -m "project ending's commit "
+git commit -m "project ending commit "
 
 git status
 

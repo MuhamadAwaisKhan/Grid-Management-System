@@ -26,17 +26,19 @@ export class CustomerService {
     return await this.customerRepository.findOne({where:{customerId:id}});
   }
 
-  async update(id: number, updateCustomerDto: CreateCustomerDto): Promise<CustomerEntity> {
+  async update(id: number, updateCustomerDto: CreateCustomerDto): Promise<CustomerEntity | object> {
     const customer = await this.customerRepository.findOne({where:{customerId:id}});
     if (!customer) {
       throw new Error('Customer not found');
     }
 
     this.customerRepository.merge(customer, updateCustomerDto);
-    return await this.customerRepository.save(customer);
+    const updatedcustomer= await this.customerRepository.save(customer);
+    return{message: "Customer Updated Successfully" ,data:updatedcustomer};
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<object> {
     await this.customerRepository.delete(id);
+    return { meassage:"Customer Deleted Successfully"};
   }
 }

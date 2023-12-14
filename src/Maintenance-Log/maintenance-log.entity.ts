@@ -10,7 +10,6 @@ import {
   OneToOne,
 } from 'typeorm';
 import { EmployeeEntity } from '../employee/employee.entity';
-import { SubstationEntity } from '../substation/substation.entity';
 import { TransformerEntity } from '../transformer/transformer.entity';
 import { CircuitBreakerEntity } from '../circuit-breaker/circuit-breaker.entity';
 import { FeederEntity } from '../feeder/feeder.entity';

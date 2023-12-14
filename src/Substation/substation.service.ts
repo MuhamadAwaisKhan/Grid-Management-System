@@ -1,29 +1,59 @@
 // src/substation/substation.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { SubstationEntity } from './substation.entity';
-import { CreateSubstationDto } from './dto/substation.dto';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
 import { GridStationEntity } from 'src/GridStation/grid-station.entity';
 import { CreateGridStationDto } from 'src/GridStation/dto/grid-station.dto';
+import { connect } from 'http2';
+
+import CreateSubstationDto from './dto/create_substation.dto';
+import { NewSubStationEntity } from './newsubstation.entity';
 
 @Injectable()
 export class SubstationService {
   constructor(
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
     @InjectRepository(GridStationEntity)
-    private readonly gridStationRepository: Repository<GridStationEntity>,
+    private gridStationRepository: Repository<GridStationEntity>,
+
+    @InjectRepository(NewSubStationEntity)
+    private newSubStationRepository: Repository<NewSubStationEntity>,
   ) {}
 
   async create(
     createSubstationDto: CreateSubstationDto,
     gridStationId: number, // Accept gridStationId as an argument
-  ): Promise<SubstationEntity | object> {
-    const createdSubstation =
-      this.substationRepository.create(createSubstationDto);
+  ): Promise<NewSubStationEntity | object> {
+    console.log('createSubstationDto -> ', createSubstationDto);
 
+
+    let createdSubstation = this.newSubStationRepository.create(createSubstationDto);
+
+    console.log("createdSubstation -> ", createdSubstation);
+    
+    // const connection = this.substationRepository.manager.connection;
+    // const queryRunner = connection.createQueryRunner();
+
+    // await queryRunner.connect();
+    // await queryRunner.startTransaction();
+    // // const createdSubstation =
+    // //   this.substationRepository.create(createSubstationDto);
+
+    // try {
+    //   const result = await queryRunner.query(
+    //     'INSERT INTO public."Substation"("substationId", name, capacity, "voltageLevel") VALUES ($1, $2, $3, $4);',
+    //     [3, "test", "test", "test"],
+    //   );
+
+    //   console.log("result -> ", result);
+      
+    //  await queryRunner.commitTransaction();
+    // } catch (err) {
+    //   await queryRunner.rollbackTransaction();
+    //   throw err;
+    // } finally {
+    //   await queryRunner.release();
+    // }
     if (gridStationId) {
       const gridStation = await this.gridStationRepository.findOneBy({
         gridId: gridStationId,
@@ -35,11 +65,10 @@ export class SubstationService {
       createdSubstation.gridStation = gridStation;
     }
 
-    console.log('createdSubstation -> ', createdSubstation);
+    // console.log('createdSubstation -> ', createdSubstation);
 
-    // return {message: "In Development"}
 
-    return await this.substationRepository
+    return await this.newSubStationRepository
       .save(createdSubstation)
       .then((res) => {
         return {
@@ -56,31 +85,40 @@ export class SubstationService {
       });
   }
 
-  async findAll(): Promise<SubstationEntity[]> {
-    return await this.substationRepository.find({
-      relations: ['gridStation', 'transformer', 'faults', 'feeder','scheduledMaintenances','assetInventories','employees','eventLogs'],
+  async findAll(): Promise<NewSubStationEntity[]> {
+    return await this.newSubStationRepository.find({
+      relations: [
+        'gridStation',
+        'transformer',
+        'faults',
+        'feeder',
+        'scheduledMaintenances',
+        'assetInventories',
+        'employees',
+        'eventLogs',
+      ],
     });
   }
 
-  async findOne(id: number): Promise<SubstationEntity> {
-    return await this.substationRepository.findOne({
-      where: { substationId: id },
+  async findOne(id: number): Promise<NewSubStationEntity> {
+    return await this.newSubStationRepository.findOne({
+      where: { id: id },
     });
   }
 
   async update(
     id: number,
     updateSubstationDto: CreateSubstationDto,
-  ): Promise<SubstationEntity | object> {
-    const substation = await this.substationRepository.findOne({
-      where: { substationId: id },
+  ): Promise<NewSubStationEntity | object> {
+    const substation = await this.newSubStationRepository.findOne({
+      where: { id: id },
     });
     if (!substation) {
       throw new Error('Substation not found');
     }
 
-    this.substationRepository.merge(substation, updateSubstationDto);
-    const updatedsubstation = await this.substationRepository.save(substation);
+    this.newSubStationRepository.merge(substation, updateSubstationDto);
+    const updatedsubstation = await this.newSubStationRepository.save(substation);
     return {
       message: 'Substation Updated Successfully',
       data: updatedsubstation,
@@ -88,7 +126,7 @@ export class SubstationService {
   }
 
   async remove(id: number): Promise<object> {
-    await this.substationRepository.delete(id);
+    await this.newSubStationRepository.delete(id);
     return { message: 'Substation Deleted Successfully' };
   }
 }

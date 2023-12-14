@@ -40,7 +40,7 @@ export class AuthorizeController {
   async forgetPassword(
     @Param('username') username: string,
     @Body() updatePasswordDto: AuthUpdatePasswordDto,
-  ): Promise<object> {
+  ) {
     const result = await this.authorizeService.forgetPassword(
       username, 
       updatePasswordDto,

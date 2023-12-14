@@ -6,10 +6,11 @@ import { GridStationEntity } from './grid-station.entity';
 import { GridStationController } from './grid-station.controller';
 import { GridStationService } from './grid-station.service';
 import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([GridStationEntity,PowerSupplierEntity,SubstationEntity])],
+  imports: [TypeOrmModule.forFeature([GridStationEntity,PowerSupplierEntity,NewSubStationEntity])],
   controllers: [GridStationController],
 
   exports: [GridStationService],

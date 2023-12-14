@@ -9,7 +9,7 @@ export class BillingEntity {
   billingId: number;
 
   @Column()
-  billingDate: Date;
+  billingDate: string;
 
   @Column()
   usagePeriod: string;

@@ -8,12 +8,14 @@ import { MaintenanceLogEntity } from './maintenance-log.entity';
 @Controller('maintenance-log')
 export class MaintenanceLogController {
   constructor(private readonly maintenanceLogService: MaintenanceLogService) {}
-  @Post(':feederId')
+  @Post(':feederId/:employeeId')
   async create(
     @Body() createMaintenanceLogDto: CreateMaintenanceLogDto,
       @Param('feederId') feederId: number,
+      @Param('employeeId') employeeId: number,
+      
       ) {
-    return this.maintenanceLogService.create(createMaintenanceLogDto,feederId);
+    return this.maintenanceLogService.create(createMaintenanceLogDto,feederId,employeeId);
   }
   // @Post(':employeeId')
   // async create(

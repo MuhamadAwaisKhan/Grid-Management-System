@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { GridStationEntity } from './GridStation/grid-station.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GridStationModule } from './GridStation/grid-station.module';
-import { SubstationEntity } from './substation/substation.entity';
 import { submodule } from './Substation/substation.module';
 import { AlarmLogEntity } from './AlarmLog/alarm-log.entity';
 import { AssetInventoryEntity } from './AssetInventory/asset-inventory.entity';
@@ -38,6 +37,8 @@ import { metermodule } from './powermeter/powermeter.module';
 import { suppliermodule } from './PowerSupplier/powersupplier.module';
 import { schedulemodule } from './Schedule-Maintenance/scmaintenance..module';
 import { transformermodule } from './Transformer/transformer.module';
+import { NewSubStationEntity } from './Substation/newsubstation.entity';
+
 
 @Module({
   imports: [
@@ -48,10 +49,47 @@ import { transformermodule } from './Transformer/transformer.module';
       username: 'postgres',
       password: '123',
       database: 'grid',
-      entities: [GridStationEntity,SubstationEntity,AlarmLogEntity,AssetInventoryEntity,authorize,BillingEntity,CircuitBreakerEntity,CustomerEntity,EmployeeEntity,EventLogEntity,FaultEntity,FeederEntity,MaintenanceLogEntity,PowerOutageEntity,PowerMeterEntity,PowerSupplierEntity,ScheduleMaintenanceEntity,TransformerEntity],
+      entities: [
+        GridStationEntity,
+      NewSubStationEntity,
+        AlarmLogEntity,
+        AssetInventoryEntity,
+        authorize,
+        BillingEntity,
+        CircuitBreakerEntity,
+        CustomerEntity,
+        EmployeeEntity,
+        EventLogEntity,
+        FaultEntity,
+        FeederEntity,
+        MaintenanceLogEntity,
+        PowerOutageEntity,
+        PowerMeterEntity,
+        PowerSupplierEntity,
+        ScheduleMaintenanceEntity,
+        TransformerEntity,
+      ],
       synchronize: true,
+      
     }),
-    GridStationModule,submodule,alarmmodule,AssetModule,AuthorizeModule,billingmodule,CircuitModule,customermodule,employeemodule,eventmodule,faultmodule,feedermodule,maintenancemodule,poweroutagemodule,metermodule,suppliermodule,schedulemodule,transformermodule,
+    GridStationModule,
+    submodule,
+    alarmmodule,
+    AssetModule,
+    AuthorizeModule,
+    billingmodule,
+    CircuitModule,
+    customermodule,
+    employeemodule,
+    eventmodule,
+    faultmodule,
+    feedermodule,
+    maintenancemodule,
+    poweroutagemodule,
+    metermodule,
+    suppliermodule,
+    schedulemodule,
+    transformermodule,
   ],
   controllers: [AppController],
   providers: [AppService],

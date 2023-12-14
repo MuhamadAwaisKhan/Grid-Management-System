@@ -20,8 +20,11 @@ export class TransformerService {
   async create(createTransformerDto: CreateTransformerDto,
     feederId: number,
     ): Promise<TransformerEntity |object> {
-    const createdTransformer = this.transformerRepository.create(createTransformerDto);
-    if (feederId) {
+      console.log('createTransformerDto -> ', createTransformerDto);
+  
+      let createdTransformer = this.transformerRepository.create(createTransformerDto);
+      console.log('createdTransformer -> ', createdTransformer);
+      if (feederId) {
       const feeder = await this.feederRepository.findOneBy({feederId:feederId});
       if (!feeder) {
         throw new Error('Feeder not found');

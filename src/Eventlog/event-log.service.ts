@@ -5,13 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EventLogEntity } from './event-log.entity';
 import { CreateEventLogDto } from './dto/event-log.dto';
-import { SubstationEntity } from 'src/substation/substation.entity';
+import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+
 
 @Injectable()
 export class EventLogService {
   constructor(
-    @InjectRepository(SubstationEntity)
-    private readonly substationRepository: Repository<SubstationEntity>,
+    @InjectRepository(NewSubStationEntity)
+    private readonly substationRepository: Repository<NewSubStationEntity>,
 
     @InjectRepository(EventLogEntity)
     private readonly eventLogRepository: Repository<EventLogEntity>,
@@ -25,12 +26,12 @@ export class EventLogService {
     const createdEventLog = this.eventLogRepository.create(createEventLogDto);
   if (substationId) {
     const substation = await this.substationRepository.findOneBy(
-      { substationId: substationId },
+      { id: substationId },
     );
     if (!substation) {
       throw new Error('Substation not found');
     }
-    createdEventLog.substation = substation;
+     createdEventLog.substation = substation;
   }
   console.log('createdEventLog -> ', createdEventLog);
   // return {message: "In Development"}
