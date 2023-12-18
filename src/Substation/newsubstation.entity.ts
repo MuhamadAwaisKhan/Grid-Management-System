@@ -1,10 +1,11 @@
 // src/substation/substation.entity.ts
 
 import { AssetInventoryEntity } from 'src/AssetInventory/asset-inventory.entity';
+import { NewEmployeeEntity } from 'src/Employee/newemployee.entity';
 import { EventLogEntity } from 'src/Eventlog/event-log.entity';
 import { GridStationEntity } from 'src/GridStation/grid-station.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
-import { EmployeeEntity } from 'src/employee/employee.entity';
+
 import { FaultEntity } from 'src/fault/fault.entity';
 import { FeederEntity } from 'src/feeder/feeder.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, ManyToMany } from 'typeorm';
@@ -21,7 +22,7 @@ export class NewSubStationEntity {
 
   @Column()
   voltageLevel: string;
-  @ManyToOne(() => GridStationEntity, gridStation => gridStation.substations, {nullable: true})
+  @ManyToOne(() => GridStationEntity, gridStation => gridStation.substations, {nullable: true,onDelete: 'CASCADE'})
   @JoinColumn({ name: 'gridId' })
   gridStation: GridStationEntity;
   
@@ -42,9 +43,9 @@ export class NewSubStationEntity {
 
  
 
-  @OneToMany(() => EmployeeEntity, employee => employee.substation, {nullable: true})
+  @OneToMany(() => NewEmployeeEntity, employee => employee.substation, {nullable: true})
   @JoinColumn({ name: 'employeeId' })
-  employees: EmployeeEntity;
+  employees: NewEmployeeEntity;
   @OneToMany(() => EventLogEntity, eventLog => eventLog.substation, {nullable: true})
   @JoinColumn({ name: 'eventId' })
   eventLogs: EventLogEntity;

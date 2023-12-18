@@ -24,7 +24,7 @@ export class FaultEntity {
   @Column()
   type: string;
 
-  @ManyToOne(() => NewSubStationEntity, substation => substation.faults)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.faults,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
   substation: NewSubStationEntity;
 }

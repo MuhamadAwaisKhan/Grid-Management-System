@@ -9,11 +9,12 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
-import { EmployeeEntity } from '../employee/employee.entity';
-import { TransformerEntity } from '../transformer/transformer.entity';
+
+
 import { CircuitBreakerEntity } from '../circuit-breaker/circuit-breaker.entity';
 import { FeederEntity } from '../feeder/feeder.entity';
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
+import { NewEmployeeEntity } from 'src/Employee/newemployee.entity';
 
 @Entity('MaintenanceLog')
 export class MaintenanceLogEntity {
@@ -23,11 +24,11 @@ export class MaintenanceLogEntity {
   @Column()
   description: string;
   @Column()
-  timestamp: Date;
+  timestamp: string;
 
-  @ManyToOne(() => EmployeeEntity, (employee) => employee.maintenanceLogs)
+  @ManyToOne(() => NewEmployeeEntity, (employee) => employee.maintenanceLogs,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'employeeId' })
-  employee: EmployeeEntity;
+  employee: NewEmployeeEntity;
 
   //   @ManyToOne(() => SubstationEntity, substation => substation.maintenanceLogs)
   //   @JoinColumn({ name: 'substationId' })
@@ -53,7 +54,7 @@ export class MaintenanceLogEntity {
   // @JoinColumn({ name: 'maintenanceId' })
   // scheduleMaintenances: ScheduleMaintenanceEntity;
 
-  @ManyToOne(() => FeederEntity, (feeder) => feeder.maintenanceLogs)
+  @ManyToOne(() => FeederEntity, (feeder) => feeder.maintenanceLogs,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'feederId' })
   feeder: FeederEntity;
 }

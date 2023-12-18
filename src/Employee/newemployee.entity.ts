@@ -6,8 +6,8 @@ import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity
 import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-maintenance.entity';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
-@Entity('Employee')
-export class EmployeeEntity {
+@Entity('New Employee')
+export class NewEmployeeEntity {
   @PrimaryGeneratedColumn()
   employeeId: number;
 
@@ -20,7 +20,7 @@ export class EmployeeEntity {
   @Column()
   contactInfo: string;
 
-  @ManyToOne(() => NewSubStationEntity, substation => substation.employees)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.employees,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
   substation: NewSubStationEntity;
   // One employee can be associated with many maintenance logs

@@ -16,8 +16,8 @@ export class CreateMaintenanceLogDto {
   
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  timestamp: Date;
+ 
+  timestamp: string;
   // @IsNotEmpty()
   // @IsNumber()
   // substationId: number;

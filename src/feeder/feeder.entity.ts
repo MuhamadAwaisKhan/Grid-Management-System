@@ -6,10 +6,10 @@ import { ScheduleMaintenanceEntity } from 'src/Schedule-Maintenance/schedule-mai
 import { PowerOutageEntity } from 'src/Power-Outage/power-outage.entity';
 import { AlarmLogEntity } from 'src/AlarmLog/alarm-log.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
-import { TransformerEntity } from 'src/transformer/transformer.entity';
-import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
+
 import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+import { NewTransformerEntity } from 'src/Transformer/newtransformer.entity';
 
 @Entity('Feeder')
 export class FeederEntity {
@@ -28,10 +28,10 @@ export class FeederEntity {
   @Column()
   capacity: number;
 
-  @OneToMany(() => TransformerEntity, transformer => transformer.feeder1)
+  @OneToMany(() => NewTransformerEntity, transformer => transformer.feeder1)
   @JoinColumn({ name: 'transformerId' })
-  transformer: TransformerEntity;
-  @ManyToOne(() => NewSubStationEntity, substation => substation.feeder)
+  transformer: NewTransformerEntity;
+  @ManyToOne(() => NewSubStationEntity, substation => substation.feeder,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
 substation: NewSubStationEntity;
   // One feeder can be associated with many event logs

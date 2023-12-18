@@ -10,14 +10,11 @@ export class CreateEmployeeDto {
   name: string;
   @ApiProperty()
   @IsNotEmpty()
+  Role: string;
   
-  role: string;
   @ApiProperty()
   @IsNotEmpty()
   
   contactInfo: string;
-  // @ApiProperty()
-  // @IsNotEmpty()
-  // @IsNumber()
-  // substationId: number;
+  
 }

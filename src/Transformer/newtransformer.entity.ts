@@ -4,8 +4,8 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { FeederEntity } from 'src/feeder/feeder.entity';
 import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
 
-@Entity('Transformer')
-export class TransformerEntity {
+@Entity('New Transformer')
+export class NewTransformerEntity {
   @PrimaryGeneratedColumn()
   transformerId: number;
 
@@ -21,7 +21,7 @@ export class TransformerEntity {
   @Column()
   voltageLevel: number;
 
-  @ManyToOne(() => FeederEntity, feeder => feeder.transformer)
+  @ManyToOne(() => FeederEntity, feeder => feeder.transformer,{onDelete: 'CASCADE'})
  @JoinColumn({ name: 'feederId' })
   feeder1: FeederEntity;
 

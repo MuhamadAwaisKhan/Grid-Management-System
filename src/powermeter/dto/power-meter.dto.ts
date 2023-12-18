@@ -4,22 +4,19 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
 
 export class CreatePowerMeterDto {
+  
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  meterid: number;
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+
   serialNumber: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+ 
   units: number;
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
-  installationDate: Date;
+ 
+  installationDate: string;
   // @ApiProperty()
   // @IsNotEmpty()
   // @IsNumber()

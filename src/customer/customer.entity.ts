@@ -22,7 +22,7 @@ export class CustomerEntity {
 
   @Column()
   tariffPlan: string;
-  @OneToMany(() => BillingEntity, billing => billing.customer)
+  @OneToMany(() => BillingEntity, billing => billing.customer, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'billingId' })
   billing: BillingEntity;
   // @ManyToOne(() => SubstationEntity, substation => substation.customer)

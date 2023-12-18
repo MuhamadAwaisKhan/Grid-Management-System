@@ -3,10 +3,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EmployeeEntity } from './employee.entity';
+
 import { CreateEmployeeDto } from './dto/employee.dto';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 import { Console } from 'console';
+import { NewEmployeeEntity } from './newemployee.entity';
 
 
 @Injectable()
@@ -15,14 +16,14 @@ export class EmployeeService {
    
     @InjectRepository(NewSubStationEntity)
     private readonly substationRepository: Repository<NewSubStationEntity>,
-    @InjectRepository(EmployeeEntity)
-    private readonly employeeRepository: Repository<EmployeeEntity>,
+    @InjectRepository(NewEmployeeEntity)
+    private readonly employeeRepository: Repository<NewEmployeeEntity>,
   ) {}
 
   async create(
     createEmployeeDto: CreateEmployeeDto,
     substationId: number, // Accept substationId as an argument
-    ): Promise<EmployeeEntity| object> {
+    ): Promise<NewEmployeeEntity| object> {
       console.log('CreateEmployeeDto ->',CreateEmployeeDto);
       
     let createdEmployee =
@@ -60,15 +61,15 @@ export class EmployeeService {
       });
   }
 
-  async findAll(): Promise<EmployeeEntity[]> {
+  async findAll(): Promise<NewEmployeeEntity[]> {
     return await this.employeeRepository.find({ relations: ['substation','maintenanceLog']});
   }
 
-  async findOne(id: number): Promise<EmployeeEntity> {
+  async findOne(id: number): Promise<NewEmployeeEntity> {
     return await this.employeeRepository.findOne({where:{employeeId:id}});
   }
 
-  async update(id: number, updateEmployeeDto: CreateEmployeeDto): Promise<EmployeeEntity|object> {
+  async update(id: number, updateEmployeeDto: CreateEmployeeDto): Promise<NewEmployeeEntity|object> {
     const employee = await this.employeeRepository.findOne({where:{employeeId:id}});
     if (!employee) {
       throw new Error('Employee not found');

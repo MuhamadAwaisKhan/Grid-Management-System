@@ -8,10 +8,11 @@ import { FeederService } from './feeder.service';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { PowerOutageEntity } from 'src/Power-Outage/power-outage.entity';
 import { AlarmLogEntity } from 'src/AlarmLog/alarm-log.entity';
-import { TransformerEntity } from 'src/transformer/transformer.entity';
+
 import { PowerMeterEntity } from 'src/powermeter/power-meter.entity';
 import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
+import { NewTransformerEntity } from 'src/Transformer/newtransformer.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
       MaintenanceLogEntity,
     PowerOutageEntity,
     AlarmLogEntity,
-    TransformerEntity,
+    NewTransformerEntity,
     PowerMeterEntity,
     CircuitBreakerEntity
     ]),

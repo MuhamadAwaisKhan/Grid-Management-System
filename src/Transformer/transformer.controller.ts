@@ -3,7 +3,8 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TransformerService } from './transformer.service';
 import { CreateTransformerDto } from './dto/transformer.dto';
-import { TransformerEntity } from './transformer.entity';
+import { NewTransformerEntity } from './newtransformer.entity';
+
 @UsePipes(ValidationPipe)
 @Controller('transformer')
 export class TransformerController {
@@ -18,12 +19,12 @@ export class TransformerController {
   }
 
   @Get()
-  async findAll(): Promise<TransformerEntity[]> {
+  async findAll(): Promise<NewTransformerEntity[]> {
     return this.transformerService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<TransformerEntity> {
+  async findOne(@Param('id') id: string): Promise<NewTransformerEntity> {
     return this.transformerService.findOne(+id);
   }
 

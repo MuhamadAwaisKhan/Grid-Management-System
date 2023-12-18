@@ -11,7 +11,7 @@ import { authorize } from './Authorize/authorize.entity';
 import { BillingEntity } from './billing/billing.entity';
 import { CircuitBreakerEntity } from './circuit-breaker/circuit-breaker.entity';
 import { CustomerEntity } from './customer/customer.entity';
-import { EmployeeEntity } from './employee/employee.entity';
+
 import { EventLogEntity } from './Eventlog/event-log.entity';
 import { FaultEntity } from './fault/fault.entity';
 import { FeederEntity } from './feeder/feeder.entity';
@@ -20,7 +20,7 @@ import { PowerOutageEntity } from './Power-Outage/power-outage.entity';
 import { PowerMeterEntity } from './powermeter/power-meter.entity';
 import { PowerSupplierEntity } from './PowerSupplier/power-supplier.entity';
 import { ScheduleMaintenanceEntity } from './Schedule-Maintenance/schedule-maintenance.entity';
-import { TransformerEntity } from './transformer/transformer.entity';
+
 import { alarmmodule } from './AlarmLog/alarm-log.module';
 import { AssetModule } from './AssetInventory/asset.module';
 import { AuthorizeModule } from './Authorize/authorize.module';
@@ -38,6 +38,8 @@ import { suppliermodule } from './PowerSupplier/powersupplier.module';
 import { schedulemodule } from './Schedule-Maintenance/scmaintenance..module';
 import { transformermodule } from './Transformer/transformer.module';
 import { NewSubStationEntity } from './Substation/newsubstation.entity';
+import { NewTransformerEntity } from './Transformer/newtransformer.entity';
+import { NewEmployeeEntity } from './Employee/newemployee.entity';
 
 
 @Module({
@@ -58,7 +60,7 @@ import { NewSubStationEntity } from './Substation/newsubstation.entity';
         BillingEntity,
         CircuitBreakerEntity,
         CustomerEntity,
-        EmployeeEntity,
+        NewEmployeeEntity,
         EventLogEntity,
         FaultEntity,
         FeederEntity,
@@ -67,7 +69,7 @@ import { NewSubStationEntity } from './Substation/newsubstation.entity';
         PowerMeterEntity,
         PowerSupplierEntity,
         ScheduleMaintenanceEntity,
-        TransformerEntity,
+       NewTransformerEntity,
       ],
       synchronize: true,
       

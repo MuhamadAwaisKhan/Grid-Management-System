@@ -6,21 +6,21 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateTransformerDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+ 
   name: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+
   type: string;
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+ 
   capacity: number;
 
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+
   voltageLevel: number;
 
 }

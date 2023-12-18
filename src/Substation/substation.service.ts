@@ -30,30 +30,7 @@ export class SubstationService {
     let createdSubstation = this.newSubStationRepository.create(createSubstationDto);
 
     console.log("createdSubstation -> ", createdSubstation);
-    
-    // const connection = this.substationRepository.manager.connection;
-    // const queryRunner = connection.createQueryRunner();
 
-    // await queryRunner.connect();
-    // await queryRunner.startTransaction();
-    // // const createdSubstation =
-    // //   this.substationRepository.create(createSubstationDto);
-
-    // try {
-    //   const result = await queryRunner.query(
-    //     'INSERT INTO public."Substation"("substationId", name, capacity, "voltageLevel") VALUES ($1, $2, $3, $4);',
-    //     [3, "test", "test", "test"],
-    //   );
-
-    //   console.log("result -> ", result);
-      
-    //  await queryRunner.commitTransaction();
-    // } catch (err) {
-    //   await queryRunner.rollbackTransaction();
-    //   throw err;
-    // } finally {
-    //   await queryRunner.release();
-    // }
     if (gridStationId) {
       const gridStation = await this.gridStationRepository.findOneBy({
         gridId: gridStationId,

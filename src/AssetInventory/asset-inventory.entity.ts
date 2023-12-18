@@ -21,7 +21,7 @@ export class AssetInventoryEntity {
   @Column()
   status: string;
 
-  @ManyToOne(() => NewSubStationEntity, substation => substation.assetInventories)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.assetInventories,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
   substation: NewSubStationEntity;
 }

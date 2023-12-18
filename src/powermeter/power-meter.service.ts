@@ -5,8 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PowerMeterEntity } from './power-meter.entity';
 import { CreatePowerMeterDto } from './dto/power-meter.dto';
-import { TransformerEntity } from 'src/transformer/transformer.entity';
+
 import { CustomerEntity } from 'src/customer/customer.entity';
+import { NewTransformerEntity } from 'src/Transformer/newtransformer.entity';
 
 @Injectable()
 export class PowerMeterService {
@@ -14,8 +15,8 @@ export class PowerMeterService {
     @InjectRepository(CustomerEntity)
     private readonly customerRepository: Repository<CustomerEntity>,
  
-    @InjectRepository(TransformerEntity)
-    private readonly transformerRepository: Repository<TransformerEntity>,
+    @InjectRepository(NewTransformerEntity)
+    private readonly transformerRepository: Repository<NewTransformerEntity>,
  
     @InjectRepository(PowerMeterEntity)
     private readonly powerMeterRepository: Repository<PowerMeterEntity>,
@@ -33,7 +34,8 @@ export class PowerMeterService {
         throw new Error('Transformer not found');
       }
       
-      createdPowerMeter.transformer1 = transformer; }
+      createdPowerMeter.transformer1 = transformer;
+     }
       if(customerId){
         const customer = await this.customerRepository.findOneBy({customerId:customerId});
         if (!customer) {

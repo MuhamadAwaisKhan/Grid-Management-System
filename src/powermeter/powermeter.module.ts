@@ -4,12 +4,13 @@ import { Module } from "@nestjs/common";
 import { PowerMeterEntity } from "./power-meter.entity";
 import { PowerMeterController } from "./power-meter.controller";
 import { PowerMeterService } from "./power-meter.service";
-import { TransformerEntity } from "src/transformer/transformer.entity";
+
 import { CustomerEntity } from "src/customer/customer.entity";
+import { NewTransformerEntity } from "src/Transformer/newtransformer.entity";
 
 
 @ Module({
-    imports: [TypeOrmModule.forFeature([PowerMeterEntity,TransformerEntity,CustomerEntity])],
+    imports: [TypeOrmModule.forFeature([PowerMeterEntity,NewTransformerEntity,CustomerEntity])],
     controllers: [PowerMeterController],
     providers: [PowerMeterService],
   })

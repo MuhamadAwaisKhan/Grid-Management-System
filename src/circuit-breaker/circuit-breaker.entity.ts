@@ -32,10 +32,10 @@ export class CircuitBreakerEntity {
   status: CircuitBreakerStatus;
 
 
-  @ManyToOne(() => FeederEntity, feeder => feeder.breaker)
+  @ManyToOne(() => FeederEntity, feeder => feeder.breaker,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'breakerId' })
   feeder: FeederEntity;
-  @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.circuitBreakers, { nullable: true })
+  @ManyToOne(() => MaintenanceLogEntity, maintenanceLog => maintenanceLog.circuitBreakers, { nullable: true,onDelete: 'CASCADE'})
   @JoinColumn({ name: 'mainId' })
   maintenanceLog: MaintenanceLogEntity;
   

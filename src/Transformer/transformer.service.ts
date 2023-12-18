@@ -3,9 +3,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TransformerEntity } from './transformer.entity';
+
 import { CreateTransformerDto } from './dto/transformer.dto';
 import { FeederEntity } from 'src/feeder/feeder.entity';
+import { NewTransformerEntity } from './newtransformer.entity';
 
 @Injectable()
 export class TransformerService {
@@ -13,13 +14,13 @@ export class TransformerService {
     @InjectRepository(FeederEntity)
     private readonly feederRepository: Repository<FeederEntity>,
  
-    @InjectRepository(TransformerEntity)
-    private readonly transformerRepository: Repository<TransformerEntity>,
+    @InjectRepository(NewTransformerEntity)
+    private readonly transformerRepository: Repository<NewTransformerEntity>,
   ) {}
 
   async create(createTransformerDto: CreateTransformerDto,
     feederId: number,
-    ): Promise<TransformerEntity |object> {
+    ): Promise<NewTransformerEntity |object> {
       console.log('createTransformerDto -> ', createTransformerDto);
   
       let createdTransformer = this.transformerRepository.create(createTransformerDto);
@@ -50,17 +51,17 @@ export class TransformerService {
       });
     }
 
-  async findAll(): Promise<TransformerEntity[]> {
+  async findAll(): Promise<NewTransformerEntity[]> {
     return await this.transformerRepository.find({
       relations: ['feeder1','meter'],
     });
   }
 
-  async findOne(id: number): Promise<TransformerEntity> {
+  async findOne(id: number): Promise<NewTransformerEntity> {
     return await this.transformerRepository.findOne({ where:{transformerId:id}});
   }
 
-  async update(id: number, updateTransformerDto: CreateTransformerDto): Promise<TransformerEntity> {
+  async update(id: number, updateTransformerDto: CreateTransformerDto): Promise<NewTransformerEntity> {
     const transformer = await this.transformerRepository.findOne({ where:{transformerId:id}});
     if (!transformer) {
       throw new Error('Transformer not found');

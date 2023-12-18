@@ -3,7 +3,8 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/employee.dto';
-import { EmployeeEntity } from './employee.entity';
+import { NewEmployeeEntity } from './newemployee.entity';
+
 @UsePipes(ValidationPipe)
 @Controller('employee')
 export class EmployeeController {
@@ -18,12 +19,12 @@ export class EmployeeController {
   }
 
   @Get()
-  async findAll(): Promise<EmployeeEntity[]> {
+  async findAll(): Promise<NewEmployeeEntity[]> {
     return this.employeeService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<EmployeeEntity> {
+  async findOne(@Param('id') id: string): Promise<NewEmployeeEntity> {
     return this.employeeService.findOne(+id);
   }
 

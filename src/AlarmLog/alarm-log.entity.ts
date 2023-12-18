@@ -2,7 +2,6 @@
 
 
 import { FeederEntity } from 'src/feeder/feeder.entity';
-import { TransformerEntity } from '../transformer/transformer.entity';
 import { Entity, ManyToOne, Column, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 
@@ -25,7 +24,7 @@ export class AlarmLogEntity {
   // @JoinColumn({ name: 'substationId' })
   // substation: SubstationEntity;
 
-  @ManyToOne(() => FeederEntity, feeder => feeder.alarmLogs)
+  @ManyToOne(() => FeederEntity, feeder => feeder.alarmLogs,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'feederId' })
   feeder: FeederEntity;
 

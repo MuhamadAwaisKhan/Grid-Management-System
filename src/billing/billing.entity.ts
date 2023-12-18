@@ -20,7 +20,7 @@ export class BillingEntity {
   @Column()
   paymentStatus: string;
   
-  @ManyToOne(() => CustomerEntity, customer => customer.billing)
+  @ManyToOne(() => CustomerEntity, customer => customer.billing, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'customerId' })
   customer: CustomerEntity;
 

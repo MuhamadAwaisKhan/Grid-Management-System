@@ -1,11 +1,7 @@
 // src/schedule-maintenance/schedule-maintenance.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { EmployeeEntity } from '../employee/employee.entity';
 
-import { TransformerEntity } from '../transformer/transformer.entity';
-import { CircuitBreakerEntity } from 'src/circuit-breaker/circuit-breaker.entity';
-import { FeederEntity } from '../feeder/feeder.entity';
 import { MaintenanceLogEntity } from 'src/Maintenance-Log/maintenance-log.entity';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
@@ -22,7 +18,7 @@ export class ScheduleMaintenanceEntity {
 
  
 
-  @ManyToOne(() => NewSubStationEntity, substation => substation.scheduledMaintenances)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.scheduledMaintenances,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
   substation: NewSubStationEntity;
 

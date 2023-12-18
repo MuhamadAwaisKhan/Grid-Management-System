@@ -6,14 +6,15 @@ import { Repository } from 'typeorm';
 import { MaintenanceLogEntity } from './maintenance-log.entity';
 import { CreateMaintenanceLogDto } from './dto/maintenance-log.dto';
 import { FeederEntity } from 'src/feeder/feeder.entity';
-import { EmployeeEntity } from 'src/employee/employee.entity';
+
 import { scheduled } from 'rxjs';
+import { NewEmployeeEntity } from 'src/Employee/newemployee.entity';
 
 @Injectable()
 export class MaintenanceLogService {
   constructor(
-    @InjectRepository(EmployeeEntity)
-    private readonly employeeRepository: Repository<EmployeeEntity>,
+    @InjectRepository(NewEmployeeEntity)
+    private readonly employeeRepository: Repository<NewEmployeeEntity>,
 
     @InjectRepository(FeederEntity)
     private readonly feederRepository: Repository<FeederEntity>,

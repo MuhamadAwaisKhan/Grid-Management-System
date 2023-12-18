@@ -3,7 +3,7 @@
 import { PowerSupplierEntity } from 'src/PowerSupplier/power-supplier.entity';
 import { NewSubStationEntity } from 'src/Substation/newsubstation.entity';
 
-import { TransformerEntity } from 'src/transformer/transformer.entity';
+
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('GridStation')
@@ -26,7 +26,7 @@ export class GridStationEntity {
   @JoinColumn({ name: 'substationId' })
   substations: NewSubStationEntity;
  
-  @ManyToOne(() => PowerSupplierEntity, supplier => supplier.gridstation,{ nullable: true })
+  @ManyToOne(() => PowerSupplierEntity, supplier => supplier.gridstation,{onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'supplierId' })
   supplier: PowerSupplierEntity;
 }

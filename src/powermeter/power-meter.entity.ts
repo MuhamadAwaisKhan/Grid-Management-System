@@ -2,7 +2,8 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { CustomerEntity } from 'src/customer/customer.entity';
-import { TransformerEntity } from 'src/transformer/transformer.entity';
+import { NewTransformerEntity } from 'src/Transformer/newtransformer.entity';
+
 
 @Entity('PowerMeter')
 export class PowerMeterEntity {
@@ -14,15 +15,14 @@ units:Number;
   serialNumber: string;
 
   @Column()
-  installationDate: Date;
+  installationDate: string;
 
-  @ManyToOne(() => CustomerEntity, customer => customer.powermeter)
+  @ManyToOne(() => CustomerEntity, customer => customer.powermeter, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'customerId' })
   customer: CustomerEntity;
   
-  @ManyToOne(() => TransformerEntity, transformer => transformer.meter)
+  @ManyToOne(() => NewTransformerEntity, transformer => transformer.meter, {onDelete: 'CASCADE'})
   @JoinColumn({ name: 'transformerId' })
-
-  transformer1: TransformerEntity;
+  transformer1: NewTransformerEntity;
 
 }

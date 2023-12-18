@@ -6,9 +6,10 @@ import { MaintenanceLogController } from "./maintenance-log.controller";
 import { MaintenanceLogService } from "./maintenance-log.service";
 import { ScheduleMaintenanceEntity } from "src/Schedule-Maintenance/schedule-maintenance.entity";
 import { FeederEntity } from "src/feeder/feeder.entity";
-import { EmployeeEntity } from "src/employee/employee.entity";
+import { NewEmployeeEntity } from "src/Employee/newemployee.entity";
+
 @Module({
-    imports: [TypeOrmModule.forFeature([MaintenanceLogEntity,ScheduleMaintenanceEntity,FeederEntity,EmployeeEntity,ScheduleMaintenanceEntity] )],
+    imports: [TypeOrmModule.forFeature([MaintenanceLogEntity,ScheduleMaintenanceEntity,FeederEntity,NewEmployeeEntity,ScheduleMaintenanceEntity] )],
     controllers: [MaintenanceLogController],
     providers: [MaintenanceLogService],
   })

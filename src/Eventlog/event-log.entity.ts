@@ -17,7 +17,7 @@ export class EventLogEntity {
   @Column()
   date: string;
 
-  @ManyToOne(() => NewSubStationEntity, substation => substation.eventLogs)
+  @ManyToOne(() => NewSubStationEntity, substation => substation.eventLogs,{onDelete: 'CASCADE'})
   @JoinColumn({ name: 'substationId' })
   substation: NewSubStationEntity;
 
