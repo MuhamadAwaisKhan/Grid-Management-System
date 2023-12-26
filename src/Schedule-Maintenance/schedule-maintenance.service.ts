@@ -67,7 +67,7 @@ export class ScheduleMaintenanceService {
   }
 
   async findOne(id: number): Promise<ScheduleMaintenanceEntity> {
-    return await this.maintenanceRepository.findOne({where:{maintenanceId:id}});
+    return await this.maintenanceRepository.findOne({where:{maintenanceId:id}, relations: ['substation','maintenanceLog']});
   }
 
   async update(id: number, updateMaintenanceDto: CreateScheduleMaintenanceDto): Promise<ScheduleMaintenanceEntity | object > {

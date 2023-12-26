@@ -57,7 +57,7 @@ export class EventLogService {
   }
 
   async findOne(id: number): Promise<EventLogEntity> {
-    return await this.eventLogRepository.findOne({ where: { eventId: id } });
+    return await this.eventLogRepository.findOne({ where: { eventId: id },relations: ['substation'] });
   }
 
   async update(

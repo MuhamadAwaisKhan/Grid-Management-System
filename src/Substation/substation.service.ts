@@ -79,7 +79,7 @@ export class SubstationService {
 
   async findOne(id: number): Promise<NewSubStationEntity> {
     return await this.newSubStationRepository.findOne({
-      where: { id: id },
+      where: { id: id },relations: ['gridStation','transformer','faults','feeder','scheduledMaintenances','assetInventories','employees','eventLogs']
     });
   }
 

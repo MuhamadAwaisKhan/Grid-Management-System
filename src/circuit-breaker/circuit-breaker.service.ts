@@ -70,7 +70,7 @@ export class CircuitBreakerService {
   }
 
   async findOne(id: number): Promise<CircuitBreakerEntity> {
-    return await this.circuitBreakerRepository.findOne({where:{breakerId:id}});
+    return await this.circuitBreakerRepository.findOne({where:{breakerId:id}, relations: ['feeder','maintenancelog']});
   }
 
   async update(id: number, updateCircuitBreakerDto: CreateCircuitBreakerDto): Promise<CircuitBreakerEntity |object> {

@@ -53,7 +53,7 @@ export class BillingService {
   }
 
   async findOne(id: number): Promise<BillingEntity> {
-    return await this.billingRepository.findOne({where:{billingId:id}});
+    return await this.billingRepository.findOne({where:{billingId:id}, relations: ['customer']});
   }
 
   async update(id: number, updateBillingDto: CreateBillingDto): Promise<BillingEntity| object > {

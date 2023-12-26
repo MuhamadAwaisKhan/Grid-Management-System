@@ -6,21 +6,20 @@ import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
 export class CreateCustomerDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+
   name: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  
   contact: string;
   
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  address: string;
+ address: string;
+ 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
   tariffPlan: string;
  
 }

@@ -62,7 +62,7 @@ export class GridStationService {
   }
 
   async findOne(id: number) {
-    return this.gridStationRepository.findOne({ where: { gridId: id } });
+    return this.gridStationRepository.findOne({ where: { gridId: id } ,relations: ['supplier'] });
   }
 
   async update(

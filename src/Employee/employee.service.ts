@@ -66,7 +66,7 @@ export class EmployeeService {
   }
 
   async findOne(id: number): Promise<NewEmployeeEntity> {
-    return await this.employeeRepository.findOne({where:{employeeId:id}});
+    return await this.employeeRepository.findOne({where:{employeeId:id}, relations: ['substation','maintenanceLog']});
   }
 
   async update(id: number, updateEmployeeDto: CreateEmployeeDto): Promise<NewEmployeeEntity|object> {

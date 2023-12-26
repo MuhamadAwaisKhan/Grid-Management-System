@@ -24,7 +24,7 @@ export class PowerSupplierService {
   }
 
   async findOne(id: number): Promise<PowerSupplierEntity> {
-    return await this.powerSupplierRepository.findOne({where:{supplierId:id}});
+    return await this.powerSupplierRepository.findOne({where:{supplierId:id}, relations: ['gridstation']});
   }s
 
   async update(id: number, updatePowerSupplierDto: CreatePowerSupplierDto): Promise<PowerSupplierEntity | object> {

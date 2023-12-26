@@ -1,6 +1,6 @@
 // src/customer/customer.controller.ts
 
-import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe, Query } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/customer.dto';
 import { CustomerEntity } from './customer.entity';
@@ -35,5 +35,10 @@ export class CustomerController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.customerService.remove(+id);
+  }
+  @Get("search")
+  async getCustomers(@Query() filter: any): Promise<CustomerEntity[]> {
+    const customers = await this.customerService.findCustomersWithFilter(filter);
+    return customers;
   }
 }

@@ -61,7 +61,7 @@ export class AssetInventoryService {
 
   async findOne(id: number): Promise<AssetInventoryEntity> {
     return await this.assetInventoryRepository.findOne({
-      where: { assetId: id },
+      where: { assetId: id }, relations: ['substation']
     });
   }
 

@@ -52,7 +52,7 @@ export class AlarmLogService {
   }
 
   async findOne(id: number): Promise<AlarmLogEntity> {
-    return await this.alarmLogRepository.findOne({ where: { alarmId: id } });
+    return await this.alarmLogRepository.findOne({ where: { alarmId: id },relations: ['feeder']  });
   }
 
   async update(

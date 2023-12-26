@@ -56,7 +56,7 @@ export class FaultService {
   }
 
   async findOne(id: number): Promise<FaultEntity> {
-    return await this.faultRepository.findOne({ where: { faultId: id } });
+    return await this.faultRepository.findOne({ where: { faultId: id }, relations: ['substation'] });
   }
 
   async update(

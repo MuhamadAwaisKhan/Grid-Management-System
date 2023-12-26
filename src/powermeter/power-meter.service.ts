@@ -72,7 +72,7 @@ export class PowerMeterService {
   }
 
   async update(id: number, updatePowerMeterDto: CreatePowerMeterDto): Promise<PowerMeterEntity | object > {
-    const powerMeter = await this.powerMeterRepository.findOne({where:{meterid:id}});
+    const powerMeter = await this.powerMeterRepository.findOne({where:{meterid:id}, relations: ['transformer1','customer']});
     if (!powerMeter) {
       throw new Error('PowerMeter not found');
     }

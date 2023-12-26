@@ -100,7 +100,7 @@ export class MaintenanceLogService {
   }
 
   async findOne(id: number): Promise<MaintenanceLogEntity> {
-    return await this.maintenanceLogRepository.findOne({where:{mainId:id}});
+    return await this.maintenanceLogRepository.findOne({where:{mainId:id}, relations:['feeder','employee','circuitBreakers','schedule']});
   }
 
   async update(id: number, updateMaintenanceLogDto: CreateMaintenanceLogDto): Promise<MaintenanceLogEntity> {

@@ -58,7 +58,7 @@ export class TransformerService {
   }
 
   async findOne(id: number): Promise<NewTransformerEntity> {
-    return await this.transformerRepository.findOne({ where:{transformerId:id}});
+    return await this.transformerRepository.findOne({ where:{transformerId:id},relations: ['feeder1','meter']});
   }
 
   async update(id: number, updateTransformerDto: CreateTransformerDto): Promise<NewTransformerEntity> {

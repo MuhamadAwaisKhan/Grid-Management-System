@@ -56,11 +56,11 @@ export class PowerOutageService {
   }
 
   async findOne(id: number): Promise<PowerOutageEntity> {
-    return await this.powerOutageRepository.findOne({ where: { outageId: id } });
+    return await this.powerOutageRepository.findOne({ where: { outageId: id }, relations: ['feeder'] });
   }
 
   async update(id: number, updatePowerOutageDto: CreatePowerOutageDto): Promise<PowerOutageEntity> {
-    const powerOutage = await this.powerOutageRepository.findOne({ where: { outageId: id } });
+    const powerOutage = await this.powerOutageRepository.findOne({ where: { outageId: id }, relations: ['feeder'] });
     if (!powerOutage) {
       throw new Error('Power Outage not found');
     }

@@ -65,7 +65,7 @@ export class FeederService {
   }
 
   async findOne(id: number): Promise<FeederEntity> {
-    return await this.feederRepository.findOne({ where: { feederId: id } });
+    return await this.feederRepository.findOne({ where: { feederId: id }, relations: [      'substation',       'maintenanceLogs',        'alarmLogs',        'powerOutages',        'breaker',        'transformer',      ] });
   }
 
   async update(
