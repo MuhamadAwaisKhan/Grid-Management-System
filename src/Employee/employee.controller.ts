@@ -4,9 +4,11 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/employee.dto';
 import { NewEmployeeEntity } from './newemployee.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @UsePipes(ValidationPipe)
 @Controller('employee')
+@ApiTags('employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 

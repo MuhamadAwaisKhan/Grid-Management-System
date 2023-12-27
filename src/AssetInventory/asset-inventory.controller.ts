@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { AssetInventoryService } from './asset-inventory.service';
 import { CreateAssetInventoryDto } from './dto/asset-inventory.dto';
 import { AssetInventoryEntity } from './asset-inventory.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('asset-inventory')
+@ApiTags('asset-inventory')
 export class AssetInventoryController {
   constructor(private readonly assetInventoryService: AssetInventoryService) {}
   @Post(':SubstationId')

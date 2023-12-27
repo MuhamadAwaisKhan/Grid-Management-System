@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { PowerSupplierService } from './power-supplier.service';
 import { CreatePowerSupplierDto } from './dto/power-supplier.dto';
 import { PowerSupplierEntity } from './power-supplier.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('power-supplier')
+@ApiTags('power-supplier')
 export class PowerSupplierController {
   constructor(private readonly powerSupplierService: PowerSupplierService) {}
 

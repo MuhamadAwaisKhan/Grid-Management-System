@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { CircuitBreakerService } from './circuit-breaker.service';
 import { CreateCircuitBreakerDto } from './dto/circuit-breaker.dto';
 import { CircuitBreakerEntity } from './circuit-breaker.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('circuit-breaker')
+@ApiTags('circuit-breaker')
 export class CircuitBreakerController {
   constructor(private readonly circuitBreakerService: CircuitBreakerService) {}
 

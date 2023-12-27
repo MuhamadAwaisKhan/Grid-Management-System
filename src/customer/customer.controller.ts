@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/customer.dto';
 import { CustomerEntity } from './customer.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('customer')
+@ApiTags('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 

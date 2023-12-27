@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { PowerOutageService } from './power-outage.service';
 import { CreatePowerOutageDto } from './dto/power-outage.dto';
 import { PowerOutageEntity } from './power-outage.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('power-outage')
+@ApiTags('power-outage')
 export class PowerOutageController {
   constructor(private readonly powerOutageService: PowerOutageService) {}
 

@@ -4,9 +4,11 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { TransformerService } from './transformer.service';
 import { CreateTransformerDto } from './dto/transformer.dto';
 import { NewTransformerEntity } from './newtransformer.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @UsePipes(ValidationPipe)
 @Controller('transformer')
+@ApiTags('transformer')
 export class TransformerController {
   constructor(private readonly transformerService: TransformerService) {}
 

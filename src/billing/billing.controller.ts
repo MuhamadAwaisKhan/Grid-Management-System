@@ -5,8 +5,10 @@ import { BillingService } from './billing.service';
 import { CreateBillingDto } from './dto/billing.dto';
 import { BillingEntity } from './billing.entity';
 import { CreateCustomerDto } from 'src/customer/dto/customer.dto';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('billing')
+@ApiTags('billing')
 export class BillingController {
   constructor(private readonly billingService: BillingService) {}
 

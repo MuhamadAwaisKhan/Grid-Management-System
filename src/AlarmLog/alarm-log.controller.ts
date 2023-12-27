@@ -4,9 +4,11 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { AlarmLogService } from './alarm-log.service';
 import { CreateAlarmLogDto } from './dto/alarm-log.dto';
 import { AlarmLogEntity } from './alarm-log.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @UsePipes(ValidationPipe)
 @Controller('alarm-log')
+@ApiTags('alarm-log')
 export class AlarmLogController {
   constructor(private readonly alarmLogService: AlarmLogService) {}
   @Post(':feedersId')

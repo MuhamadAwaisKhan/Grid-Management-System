@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { ScheduleMaintenanceService } from './schedule-maintenance.service';
 import { CreateScheduleMaintenanceDto } from './dto/schedule-maintenance.dto';
 import { ScheduleMaintenanceEntity } from './schedule-maintenance.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('schedule-maintenance')
+@ApiTags('schedule-maintenance')
 export class ScheduleMaintenanceController {
   constructor(private readonly scheduleMaintenanceService: ScheduleMaintenanceService) {}
   @Post(':substationId/:mainId')

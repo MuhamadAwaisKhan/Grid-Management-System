@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { FaultService } from './fault.service';
 import { CreateFaultDto } from './dto/fault.dto';
 import { FaultEntity } from './fault.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('fault')
+@ApiTags('fault')
 export class FaultController {
   constructor(private readonly faultService: FaultService) {}
   @Post(':substationId')

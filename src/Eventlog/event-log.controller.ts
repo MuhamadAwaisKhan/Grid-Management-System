@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { EventLogService } from './event-log.service';
 import { CreateEventLogDto } from './dto/event-log.dto';
 import { EventLogEntity } from './event-log.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('event-log')
+@ApiTags('event-log')
 export class EventLogController {
   constructor(private readonly eventLogService: EventLogService) {}
   @Post(':substationId')

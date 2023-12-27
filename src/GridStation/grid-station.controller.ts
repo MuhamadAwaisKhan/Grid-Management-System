@@ -16,8 +16,10 @@ import {
   CreateGridStationDto,
   UpdateGridStationDto,
 } from './dto/grid-station.dto';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('grid-station')
+@ApiTags('grid-station')
 export class GridStationController {
   constructor(private readonly gridStationService: GridStationService) {}
 

@@ -14,9 +14,11 @@ import {
 import { SubstationService } from './substation.service';
 import CreateSubstationDto from './dto/create_substation.dto';
 import { NewSubStationEntity } from './newsubstation.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @UsePipes(ValidationPipe)
 @Controller('substation')
+@ApiTags('substation')
 export class SubstationController {
   constructor(private readonly substationService: SubstationService) {}
 

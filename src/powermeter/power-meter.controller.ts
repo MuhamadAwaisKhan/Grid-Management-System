@@ -5,8 +5,10 @@ import { PowerMeterService } from './power-meter.service';
 import { CreatePowerMeterDto } from './dto/power-meter.dto';
 import { PowerMeterEntity } from './power-meter.entity';
 import { CreateCustomerDto } from 'src/customer/dto/customer.dto';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('power-meter')
+@ApiTags('power-meter')
 export class PowerMeterController {
   constructor(private readonly powerMeterService: PowerMeterService) {}
 

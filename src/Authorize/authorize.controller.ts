@@ -13,8 +13,10 @@ import {
   AuthUserDto,
   AuthUpdatePasswordDto,
 } from './dto/authorize.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('authorize')
+@ApiTags('authorize')
 export class AuthorizeController {
   constructor(private readonly authorizeService: AuthorizeService) {}
 

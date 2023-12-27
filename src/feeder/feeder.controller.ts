@@ -14,8 +14,10 @@ import {
 import { FeederService } from './feeder.service';
 import { CreateFeederDto } from './dto/feeder.dto';
 import { FeederEntity } from './feeder.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('feeder')
+@ApiTags('feeder')
 export class FeederController {
   substationservice: any;
   constructor(private readonly feederService: FeederService) {}

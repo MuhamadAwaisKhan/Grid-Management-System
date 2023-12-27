@@ -4,8 +4,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPi
 import { MaintenanceLogService } from './maintenance-log.service';
 import { CreateMaintenanceLogDto } from './dto/maintenance-log.dto';
 import { MaintenanceLogEntity } from './maintenance-log.entity';
+import { ApiTags } from '@nestjs/swagger';
 @UsePipes(ValidationPipe)
 @Controller('maintenance-log')
+@ApiTags('maintenance-log')
 export class MaintenanceLogController {
   constructor(private readonly maintenanceLogService: MaintenanceLogService) {}
   @Post(':feederId/:employeeId')
